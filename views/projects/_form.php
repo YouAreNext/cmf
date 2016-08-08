@@ -26,7 +26,10 @@ $thisProject = $model->id;
 
 $searchModel = new TasksSearch();
 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-$dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
+$dataProvider->query->andFilterWhere([
+    'project_id' => $thisProject ,
+    'periodic'=>1
+]);
 
 
 
