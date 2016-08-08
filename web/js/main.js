@@ -45,10 +45,11 @@ $(function(){
         url: 'update?id='+parseUrlQuery().id,
         type: "GET",
         dataType: 'json',
+
         success: function (data) {
 
-
             $(data.checkItem).each(function(indx){
+                console.log(data.checkItem);
                 //console.log(indx);
                 //console.log($(data.checkItem)[indx].content);
 
@@ -57,7 +58,8 @@ $(function(){
                     '<div class="todo-check glyphicon glyphicon-ok"></div>' +
                     '<input type="text" class="todo-inp">' +
                     '<div class="todo-delete glyphicon glyphicon-remove"></div>' +
-                    '</div>')
+                    '</div>'
+                );
 
 
                 if(indx == 0){
@@ -72,9 +74,25 @@ $(function(){
                 $(".todo-inp").eq(indx).val(data.checkItem[indx].content);
                 //console.log(data.checkItem[indx].content);
             });
-        },
 
+        },
+        error: function () {
+            console.log("error");
+            if($(".todo-item").length == 0){
+                console.log("pew");
+                $(".todo-list").append('<div class="todo-item">' +
+                    '<div class="todo-bg"></div>' +
+                    '<div class="todo-check glyphicon glyphicon-ok"></div>' +
+                    '<input type="text" class="todo-inp">' +
+                    '<div class="todo-action glyphicon glyphicon-plus"></div>' +
+                    '</div>'
+                );
+            }else{
+                console.log($(".todo-item").length);
+            }
+        }
     })
+
 
     $(".check-confirm").click(function(){
         var jsonLength = checkJson.checkItem.length;
@@ -183,5 +201,8 @@ $(document).ready(function(){
             }
         })
     })
+
+
+
 
 });
