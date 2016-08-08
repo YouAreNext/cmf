@@ -39,8 +39,9 @@ class Projects extends \yii\db\ActiveRecord
     {
         return [
             [['site_addr', 'seo_type','Title'], 'required'],
-            [['seo_type'], 'integer'],
-            [['Commentary','Title'],'string'],
+            [['seo_type','project_chief'], 'integer'],
+            [['Commentary','Title','checklist'],'string'],
+            [['report_day'],'date','format'=>'yyyy-mm-dd'],
             [['Title', 'site_addr', 'seo_theme'], 'string', 'max' => 255],
         ];
     }
@@ -57,7 +58,9 @@ class Projects extends \yii\db\ActiveRecord
             'site_addr' => 'Адрес сайта',
             'seo_type' => 'Пакет продвижения',
             'seo_theme' => 'Тематика',
-            'project_files'=>'Загрузите файл'
+            'project_files'=>'Загрузите файл',
+            'project_chief'=>'Ответственный за проект',
+            'report_day'=>'Дата отчета'
         ];
     }
     /**

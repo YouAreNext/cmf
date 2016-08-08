@@ -424,8 +424,179 @@ label{
     background: #32b9a3;
     border-radius: 3px;
     border: 1px solid #32B9A3;
+
 }
 
 #modal .modal-dialog{
     width: 800px;
+}
+
+.todo-list{
+    margin-bottom: 40px;
+}
+.todo-item{
+    width:93%;
+    height: 50px;
+    background: #FFF;
+    position: relative;
+    border-radius: 3px;
+    border:1px solid #3abca7;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+.todo-check{
+    position: absolute;
+    left:0px;
+    top:0px;
+    width: 5%;
+    margin-right: 2%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    background: #3abca7;
+    border-radius: 1px;
+
+}
+.todo-bg{
+    position: absolute;
+    width: 0%;
+    left:0px;
+    top:0px;
+    height: 100%;
+    background: #3ABCA7;
+    transition: 0.5s;
+}
+.todo-checked .todo-bg{
+    width: 100%;
+    transition: 0.5s;
+}
+.todo-inp{
+    width: 80%;
+    z-index: 5;
+    position: relative;
+    float: left;
+    margin-right: 8%;
+    margin-left: 10%;
+    height: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 24px;
+    color: #3E3E3E;
+}
+.todo-checked .todo-inp{
+    color:#FFF;
+}
+.todo-check:before{
+    font-size: 28px;
+    color:#FFF;
+    opacity: 0.6;
+}
+.todo-checked .todo-check:before{
+    opacity: 1;
+}
+.todo-action{
+    position: absolute;
+    right: -7%;
+    cursor: pointer;
+    top:0px;
+    width: 5%;
+    text-align: center;
+    float: left;
+    line-height: 50px;
+    height: 100%;
+    background: #8bd100;
+    border:1px solid #8bd100;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+.todo-delete{
+    position: absolute;
+    right: -7%;
+    cursor: pointer;
+    top:0px;
+    width: 5%;
+    text-align: center;
+    float: left;
+    line-height: 50px;
+    height: 100%;
+    background: #C9302C;
+    border:1px solid #C9302C;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.todo-delete:before{
+    font-size: 24px;
+    color:#FFF;
+}
+.todo-action:before{
+    font-size: 24px;
+    color:#FFF;
+}
+
+.task-box{
+    width: 100%;
+
+}
+
+.list-box-item{
+    width: 40%;
+    display: inline-block;
+    border-radius:5px;
+    margin-right: 4%;
+    margin-bottom: 40px;
+}
+.task-header{
+    height: 50px;
+    line-height: 50px;
+    font-size: 22px;
+    color:#FFF;
+    text-align: center;
+    background: #3abca7;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.task-text{
+    height: 120px;
+    padding-top: 20px;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 18px;
+}
+.task-link{
+    display: block;
+    height: 40px;
+    font-size: 20px;
+    background: #3E3E3E;
+    text-align: center;
+    line-height: 40px;
+    background: #556080;
+    color:#FFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.task-link:hover{
+    color:#FFF;
+    text-decoration: none;
+    background:#6d84c5;
+}
+
+.task-finish-date{
+    float:right;
+    clear: both;
+}
+
+.bold-span{
+    font-weight: bold;
+}
+
+.total-task{
+    font-size: 18px;
+}
+
+.btn.add-task-period{
+    display: inline-block;
 }

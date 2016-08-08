@@ -132,6 +132,21 @@ class TasksController extends BehaviorsController
         ]);
     }
 
+    public function actionPeriod($id)
+    {
+        $model = new Tasks();
+        $model->periodic = 1;
+        $model->created_at=date('Y-m-d');
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/projects/update','id' => $id]);
+        } else {
+            return $this->renderAjax('period', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+
     /**
      * Creates a new Tasks model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -165,6 +180,11 @@ class TasksController extends BehaviorsController
             ]);
         }
     }
+
+    public function actionChecklist(){
+
+    }
+
     public function actionSub($date)
     {
         $model = new Tasks();

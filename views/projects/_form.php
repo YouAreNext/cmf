@@ -10,7 +10,11 @@ use yii\helpers\Url;
 use dosamigos\datepicker\DatePicker;
 use unclead\widgets\MultipleInput;
 use kartik\file\FileInput;
-
+use app\models\User;
+use yii\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Projects */
@@ -42,10 +46,38 @@ $dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
             'options'=>['enctype'=>'multipart/form-data']
         ]); ?>
         <div class="row">
+
             <div class="col-md-6">
                 <?= $form->field($model, 'Title')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'site_addr')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-md-6">
+                <?php
+                $workers = User::find()->all();
+                $items = ArrayHelper::map($workers,'id','username');
+                $params = [
+                    'prompt' => 'Ответственный за проект'
+                ];
+                echo $form->field($model, 'project_chief')->dropDownList($items,$params);
+                ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'report_day')->widget(
+                    DatePicker::className(), [
+                    // inline too, not bad
+                    'inline' => false,
+                    'language' =>'ru',
+                    // modify template for custom rendering
+                    //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+                    'clientOptions' => [
+                        'autoclose' => true,
+
+                        'format' => 'yyyy-mm-dd'
+                    ]
+                ]);?>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <?= $form->field($model, 'seo_type')->dropDownList([
                     '0' => 'Обслуживание',
@@ -53,29 +85,70 @@ $dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
                     '2' => 'Стандартный',
                     '3' => 'Максимальный',
                 ]) ?>
+
+            </div>
+            <div class="col-md-6">
                 <?= $form->field($model, 'seo_theme')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-10">
                 <?= $form->field($model, 'Commentary')->textarea(['rows' => 6]) ?>
             </div>
-        </div>
-        <div class="container-fluid spoiler">
-
-
-
 
         </div>
-
-
-
-
 
         <div class="form-group right-button">
             <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Периодические задачи</h2>
+                <div class="btn btn-success  add-task-period" data-id=<?=$model->id?>>
+                    Добавить периодическую задачу
+                </div>
+            </div>
+        </div>
+<!--       <div class="row">-->
+<!--            --><?php
+//
+//            $dataPeriod = Tasks::find()->andFilterWhere([
+//               'project_id' => $model->id,
+//                'periodic' => 1
+//            ]);
+//            echo ListView::widget([
+//                'dataProvider' => $dataPeriod,
+//                'itemView' => function($dataPeriod){
+//                    return '
+//                    <a href="" class="period-task-item">
+//                        '.$dataPeriod->title.'
+//                    </a>
+//                    ';
+//                },
+//                'options' => [
+//                    'tag' => 'div',
+//                    'class' => 'period-tasker',
+//                ],
+//                'itemOptions' => [
+//                    'tag' => 'div',
+//                    'class' => 'period-task col-md-12',
+//                ],
+//                'emptyText' => '<p>Нет периодических задач</p>',
+//                'emptyTextOptions' => [
+//                    'tag' => 'p'
+//                ],
+//                'summary' => '<p class="total-task">Всего задач: <span class="bold-span">{totalCount}</span></p>',
+//            ]);
+//
+//
+//
+//            ?>
+<!---->
+<!--        </div>-->
+
         <?php ActiveForm::end(); ?>
     </div>
     <div class="projects-form tab-pane fade" id="props">
@@ -88,29 +161,12 @@ $dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
         <div class="btn btn-info collapsed" data-toggle="collapse" data-target="#hide-me" aria-expanded="false">
             <span class="glyphicon glyphicon-chevron-down"></span>
             Чек-Лист</div>
-        <div id="hide-me" class="collapse">
+        <div id="hide-me" class="collapse in">
             <div class="todo-list">
-                Привет
+
             </div>
+            <div class="btn btn-success check-confirm" data-id=<?=$model->id?> >Обновить</div>
         </div>
-
-        <?php $form = ActiveForm::begin([
-            'enableAjaxValidation'      => true,
-            'enableClientValidation'    => false,
-            'validateOnChange'          => false,
-            'validateOnSubmit'          => true,
-            'validateOnBlur'            => false,
-        ]);?>
-
-        <?= $form->field($model, 'emails')->widget(MultipleInput::className(), [
-            'limit' => 4,
-        ]);
-        ?>
-
-        <?= Html::submitButton('Update', ['class' => 'btn btn-success']);?>
-
-        <?php ActiveForm::end();?>
-
 
 
     </div>
@@ -169,3 +225,4 @@ $dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
     </div>
 
 </div>
+
