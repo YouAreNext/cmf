@@ -8,19 +8,7 @@ var checkJson = {
 $(function(){
 
     //checkList
-    function parseUrlQuery() {
-        var data = {}
-            ,   pair = false
-            ,   param = false;
-        if(location.search) {
-            pair = (location.search.substr(1)).split('&');
-            for(var i = 0; i < pair.length; i ++) {
-                param = pair[i].split('=');
-                data[param[0]] = param[1];
-            }
-        }
-        return data;
-    }
+
 
 
 
@@ -41,57 +29,7 @@ $(function(){
         $(this).parent(".todo-item").remove();
     })
 
-    $.ajax({
-        url: 'update?id='+parseUrlQuery().id,
-        type: "GET",
-        dataType: 'json',
 
-        success: function (data) {
-
-            $(data.checkItem).each(function(indx){
-                console.log(data.checkItem);
-                //console.log(indx);
-                //console.log($(data.checkItem)[indx].content);
-
-                $(".todo-list").append('<div class="todo-item">' +
-                    '<div class="todo-bg"></div>' +
-                    '<div class="todo-check glyphicon glyphicon-ok"></div>' +
-                    '<input type="text" class="todo-inp">' +
-                    '<div class="todo-delete glyphicon glyphicon-remove"></div>' +
-                    '</div>'
-                );
-
-
-                if(indx == 0){
-                    $(".todo-delete").addClass("todo-action").removeClass("glyphicon-remove").removeClass("todo-delete")
-                        .addClass("glyphicon-plus");
-                }
-                if (data.checkItem[indx].check == 1){
-                    //console.log(data.checkItem[indx].check);
-                    $(".todo-item").eq(indx).addClass("todo-checked");
-                }
-
-                $(".todo-inp").eq(indx).val(data.checkItem[indx].content);
-                //console.log(data.checkItem[indx].content);
-            });
-
-        },
-        error: function () {
-            console.log("error");
-            if($(".todo-item").length == 0){
-                console.log("pew");
-                $(".todo-list").append('<div class="todo-item">' +
-                    '<div class="todo-bg"></div>' +
-                    '<div class="todo-check glyphicon glyphicon-ok"></div>' +
-                    '<input type="text" class="todo-inp">' +
-                    '<div class="todo-action glyphicon glyphicon-plus"></div>' +
-                    '</div>'
-                );
-            }else{
-                console.log($(".todo-item").length);
-            }
-        }
-    })
 
 
     $(".check-confirm").click(function(){
@@ -152,7 +90,7 @@ $(function(){
         $.get('../tasks/period',{'id':date}, function (data) {
 
             $('#modal').modal('show');
-            $(".modal-header").html("Добавить задачу");
+            $(".modal-header").html("Добавить периодическую задачу");
             $(".modal-body").html(data);
 
         });

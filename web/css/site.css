@@ -600,3 +600,41 @@ label{
 .btn.add-task-period{
     display: inline-block;
 }
+a:hover{
+    text-decoration: none;
+    color:#FFF;
+}
+
+.period-task-item{
+    font-size: 24px;
+    background: #6ab7f9;
+    color:#FFF;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.period-task{
+    height: 60px;
+    line-height: 60px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.period-task-date{
+    font-size: 20px;
+    text-align: right;
+    padding-right: 60px;
+
+}
+
+.period-task-date .glyphicon-calendar{
+    position: absolute;
+    right:0px;
+    height: 60px;
+    line-height: 55px;
+    color:#286090;
+}
+.period-task-date .glyphicon-calendar:before{
+    font-size: 24px;
+}

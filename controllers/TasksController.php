@@ -35,6 +35,7 @@ class TasksController extends BehaviorsController
         $dataProvider->query->andFilterWhere([
             'Status' => '1',
             'worker' => $userId,
+            'periodic' => 0
         ]);
 
         $searchModel2 = new TasksSearch();
@@ -42,6 +43,7 @@ class TasksController extends BehaviorsController
         $dataProvider2->query->andFilterWhere([
             'Status' => '2',
             'worker' => $userId,
+            'periodic' => 0
         ]);
 
 
@@ -64,7 +66,10 @@ class TasksController extends BehaviorsController
         }
 
 
-        $events = Tasks::find()->where(['Status'=>1])->all();
+        $events = Tasks::find()->where([
+            'Status'=>1,
+             'periodic' => 0
+        ])->all();
 
         $tasks = [];
 
@@ -82,7 +87,10 @@ class TasksController extends BehaviorsController
     }
     public function actionComplete()
     {
-        $events = Tasks::find()->where(['Status'=>2])->all();
+        $events = Tasks::find()->where([
+            'Status'=>2,
+             'periodic' => 0
+        ])->all();
         $tasks = [];
 
         foreach ($events as $eve) {
@@ -105,11 +113,17 @@ class TasksController extends BehaviorsController
         $searchModel = new TasksSearch();
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['Status' => '1' ]);
+        $dataProvider->query->andFilterWhere([
+            'Status' => '1',
+            'periodic' => '0'
+        ]);
 
         $searchModel2 = new TasksSearch();
         $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
-        $dataProvider2->query->andFilterWhere(['Status' => '2' ]);
+        $dataProvider2->query->andFilterWhere([
+            'Status' => '2',
+             'periodic' => '0'
+        ]);
 
         return $this->render('tasker', [
             'searchModel' => $searchModel,
@@ -136,7 +150,9 @@ class TasksController extends BehaviorsController
     {
         $model = new Tasks();
         $model->periodic = 1;
+        $model->project_id = $id;
         $model->created_at=date('Y-m-d');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['/projects/update','id' => $id]);
         } else {
@@ -146,6 +162,76 @@ class TasksController extends BehaviorsController
         }
     }
 
+    public function actionPeriodic(){
+
+
+
+
+
+
+
+
+        $dataProvider = Tasks::find()->andFilterWhere([
+            'periodic' => 1
+        ]);
+
+
+        $items = $dataProvider->all();
+        $dateToday = strtotime(date('Y-m-d'));
+        foreach ($items as $item) {
+            $id = $item->id;
+            $dateEven = strtotime($item->finish_date);
+            $finalDate = date("Y-m-d",strtotime("+1 month",$dateEven));
+            $date = Yii::$app->formatter->asDate($item->finish_date,'y-m-dd');
+            if ($dateEven == $dateToday){
+                echo $finalDate;
+                echo 'равно';
+                echo $dateEven;
+                $model = $this->findModel($id);
+                $model->finish_date = $finalDate;
+                $model->save();
+
+                $title = $model->title;
+                $description = $model->description;
+                $worker = $model->worker;
+                $project_id = $model->project_id;
+                $finish_date = $model->finish_date;
+
+
+                $model = new Tasks();
+
+                $model->title = $title;
+                $model->description = $description;
+                $model->worker = $worker;
+                $model->Status = '1';
+                $model->finish_date = $finish_date;
+                $model->project_id = $project_id;
+                var_dump($model->project_id);
+                $model->created_at = (date('Y-m-d'));
+
+
+
+
+
+                $model->save();
+
+
+            }else{
+                echo 'неравно';
+            }
+
+            echo '<br>';
+        }
+
+
+
+        {
+            return $this->renderAjax('periodic', [
+                'dataProvider1' => $dataProvider,
+
+            ]);
+        }
+    }
 
     /**
      * Creates a new Tasks model.

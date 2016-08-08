@@ -112,42 +112,51 @@ $dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
                 </div>
             </div>
         </div>
-<!--       <div class="row">-->
-<!--            --><?php
-//
-//            $dataPeriod = Tasks::find()->andFilterWhere([
-//               'project_id' => $model->id,
-//                'periodic' => 1
-//            ]);
-//            echo ListView::widget([
-//                'dataProvider' => $dataPeriod,
-//                'itemView' => function($dataPeriod){
-//                    return '
-//                    <a href="" class="period-task-item">
-//                        '.$dataPeriod->title.'
-//                    </a>
-//                    ';
-//                },
-//                'options' => [
-//                    'tag' => 'div',
-//                    'class' => 'period-tasker',
-//                ],
-//                'itemOptions' => [
-//                    'tag' => 'div',
-//                    'class' => 'period-task col-md-12',
-//                ],
-//                'emptyText' => '<p>Нет периодических задач</p>',
-//                'emptyTextOptions' => [
-//                    'tag' => 'p'
-//                ],
-//                'summary' => '<p class="total-task">Всего задач: <span class="bold-span">{totalCount}</span></p>',
-//            ]);
-//
-//
-//
-//            ?>
-<!---->
-<!--        </div>-->
+       <div class="row">
+            <?php
+
+            $dataPeriodQuery = Tasks::find()->andFilterWhere([
+               'project_id' => $model->id,
+                'periodic' => 1
+            ]);
+            $dataPeriod = new ActiveDataProvider([
+                'query' => $dataPeriodQuery,
+                'sort' => [
+                    'defaultOrder' =>['finish_date'=>SORT_ASC]
+                ],
+
+            ]);
+
+            echo ListView::widget([
+                'dataProvider' => $dataPeriod,
+                'itemView' => function($dataPeriod){
+                    return '
+                    <a href="/tasks/update?id='.$dataPeriod->id.'" class="period-task-item col-md-8">
+                        '.$dataPeriod->title.'
+                    </a>
+                    <div class="period-task-date col-md-4 "><span class="glyphicon glyphicon-calendar"></span>'.$dataPeriod->finish_date.' </div>
+                    ';
+                },
+                'options' => [
+                    'tag' => 'div',
+                    'class' => 'period-tasker',
+                ],
+                'itemOptions' => [
+                    'tag' => 'div',
+                    'class' => 'period-task col-md-12',
+                ],
+                'emptyText' => '<p>Нет периодических задач</p>',
+                'emptyTextOptions' => [
+                    'tag' => 'p'
+                ],
+                'summary' => '<p class="total-task">Всего задач: <span class="bold-span">{totalCount}</span></p>',
+            ]);
+
+
+
+            ?>
+
+        </div>
 
         <?php ActiveForm::end(); ?>
     </div>
@@ -226,3 +235,69 @@ $dataProvider->query->andFilterWhere(['project_id' => $thisProject ]);
 
 </div>
 
+<script>
+    function parseUrlQuery() {
+        var data = {}
+            ,   pair = false
+            ,   param = false;
+        if(location.search) {
+            pair = (location.search.substr(1)).split('&');
+            for(var i = 0; i < pair.length; i ++) {
+                param = pair[i].split('=');
+                data[param[0]] = param[1];
+            }
+        }
+        return data;
+    }
+    $.ajax({
+        url: 'update?id='+parseUrlQuery().id,
+        type: "GET",
+        dataType: 'json',
+
+        success: function (data) {
+
+            $(data.checkItem).each(function(indx){
+                console.log(data.checkItem);
+                //console.log(indx);
+                //console.log($(data.checkItem)[indx].content);
+
+                $(".todo-list").append('<div class="todo-item">' +
+                    '<div class="todo-bg"></div>' +
+                    '<div class="todo-check glyphicon glyphicon-ok"></div>' +
+                    '<input type="text" class="todo-inp">' +
+                    '<div class="todo-delete glyphicon glyphicon-remove"></div>' +
+                    '</div>'
+                );
+
+
+                if(indx == 0){
+                    $(".todo-delete").addClass("todo-action").removeClass("glyphicon-remove").removeClass("todo-delete")
+                        .addClass("glyphicon-plus");
+                }
+                if (data.checkItem[indx].check == 1){
+                    //console.log(data.checkItem[indx].check);
+                    $(".todo-item").eq(indx).addClass("todo-checked");
+                }
+
+                $(".todo-inp").eq(indx).val(data.checkItem[indx].content);
+                //console.log(data.checkItem[indx].content);
+            });
+
+        },
+        error: function () {
+            console.log("error");
+            if($(".todo-item").length == 0){
+                console.log("pew");
+                $(".todo-list").append('<div class="todo-item">' +
+                    '<div class="todo-bg"></div>' +
+                    '<div class="todo-check glyphicon glyphicon-ok"></div>' +
+                    '<input type="text" class="todo-inp">' +
+                    '<div class="todo-action glyphicon glyphicon-plus"></div>' +
+                    '</div>'
+                );
+            }else{
+                console.log($(".todo-item").length);
+            }
+        }
+    })
+</script>
