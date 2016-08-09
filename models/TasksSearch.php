@@ -69,7 +69,6 @@ class TasksSearch extends Tasks
 
 
 
-        $query->joinWith('project');
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -81,10 +80,7 @@ class TasksSearch extends Tasks
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'Projects.Title', $this->project_id])
         ;
-
-
         return $dataProvider;
     }
 }

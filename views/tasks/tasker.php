@@ -34,42 +34,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="tab-content">
         <div class="projects-form tab-pane fade in active " id="active">
 
-            <?php
-                $gridColumns = [
-                    'title',
-                    'description:text',
-                    'finish_date',
-                ];
-
-
-            echo ExportMenu::widget([
-                'dataProvider'=>$dataProvider,
-                'columns'=>$gridColumns
-            ])
-
-            ?>
+<!--            --><?php
+//                $gridColumns = [
+//                    'title',
+//                    'description:text',
+//                    'finish_date',
+//                ];
+//
+//
+//            echo ExportMenu::widget([
+//                'dataProvider'=>$dataProvider,
+//                'columns'=>$gridColumns
+//            ])
+//
+//            ?>
 
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
+                'hover' => true,
 
                 'columns' => [
 
-
-                    // 'id',
-
-//                    [
-//                        'attribute' => 'Title',
-//                        'value' => function (Tasks $model) {
-//                            return Html::a(Html::encode('Перейти'), Url::to(['update', 'id' => $model->id]));
-//                        },
-//                        'format' => 'raw',
-//
-//                    ],
                     'title',
                     'description:text',
-
 
                     [
                         'attribute' => 'worker',
@@ -93,44 +82,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     ],
 
-
-
-
-//
-                    //'Status',
-
                     [
                         'attribute'=>'project_id',
                         'value'=>'project.Title'
-
                     ],
                     ['class' => 'kartik\grid\ActionColumn'],
                 ],
             ]); ?>
+
         </div>
         <div class="projects-form tab-pane fade" id="complete">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider2,
                 'filterModel' => $searchModel2,
+                'responsive'=>true,
 
                 'columns' => [
 
-
-                    // 'id',
-
-//                    [
-//                        'attribute' => 'Title',
-//                        'value' => function (Tasks $model) {
-//                            return Html::a(Html::encode('Перейти'), Url::to(['update', 'id' => $model->id]));
-//                        },
-//                        'format' => 'raw',
-//
-//                    ],
                     'title',
                     'description:text',
-
                     [
-
                         'attribute' => 'worker',
                         'format' => 'text',
                         'label' => 'Исполнитель',
@@ -153,18 +124,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     ],
 
-
-
-                    //'Status',
                     [
                         'attribute'=>'project_id',
-                        'value'=>'project.Title'
+                        'value'=>'project.Title',
 
                     ],
-                    // 'created_at',
-                    // 'finish_date',
-                    // 'task_complete',
-                    // 'project_id',
+
 
                     ['class' => 'kartik\grid\ActionColumn'],
                 ],

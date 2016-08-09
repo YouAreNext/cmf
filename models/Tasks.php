@@ -62,7 +62,7 @@ class Tasks extends \yii\db\ActiveRecord
             'finish_date' => 'Дата окончания',
             'task_complete' => 'Задача завершена',
             'project_id' => 'Проект',
-
+            'projectName' => 'Project Name'
         ];
     }
 
@@ -73,6 +73,11 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Projects::className(), ['id' => 'project_id']);
     }
+
+    public function getProjectName() {
+        return $this->project->Title;
+    }
+
     public function getUser(){
         return $this->hasOne(User::className(),['id'=>'worker']);
     }
@@ -80,9 +85,7 @@ class Tasks extends \yii\db\ActiveRecord
         return $this->user->username;
     }
 
-    public function getProjectName() {
-        return $this->project->Title;
-    }
+
 
 
 }
