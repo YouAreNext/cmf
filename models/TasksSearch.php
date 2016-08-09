@@ -46,15 +46,9 @@ class TasksSearch extends Tasks
     public function search($params)
     {
         $userId = Yii::$app->user->identity['id'];
-        if (isset($project)){
-            $query = Tasks::find()->where(['project_id'=>$project]);
-        }
-        elseif (isset($user)){
-            $query = Tasks::find()->where(['worker'=>$user]);
 
-        } else{
-            $query = Tasks::find();
-        }
+        $query = Tasks::find();
+
 
 
 
@@ -74,13 +68,7 @@ class TasksSearch extends Tasks
         }
 
 
-        if ( ! is_null($this->finish_date) && strpos($this->finish_date, ' - ') !== false ) {
-            list($start_date, $end_date) = explode(' - ', $this->finish_date);
-            var_dump($end_date);
-            $query->andFilterWhere(['between', 'finish_date', $start_date, $end_date]);
-            $this->finish_date = null;
-            echo(finish_date);
-        };
+
         $query->joinWith('project');
 
         // grid filtering conditions
@@ -94,7 +82,6 @@ class TasksSearch extends Tasks
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'Projects.Title', $this->project_id])
-
         ;
 
 

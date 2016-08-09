@@ -106,7 +106,6 @@ $dataProvider->query->andFilterWhere([
         </div>
 
 
-
         <div class="row">
             <div class="col-md-12">
                 <h2>Периодические задачи</h2>
@@ -117,6 +116,9 @@ $dataProvider->query->andFilterWhere([
         </div>
        <div class="row">
             <?php
+            if ($model->isNewRecord){
+
+            }else{
 
             $dataPeriodQuery = Tasks::find()->andFilterWhere([
                'project_id' => $model->id,
@@ -156,7 +158,7 @@ $dataProvider->query->andFilterWhere([
             ]);
 
 
-
+            }
             ?>
 
         </div>
