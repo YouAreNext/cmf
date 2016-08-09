@@ -203,7 +203,7 @@ $dataProvider->query->andFilterWhere([
                 [
                     'attribute' => 'Title',
                     'value' => function (Tasks $model) {
-                        return Html::a(Html::encode($model->title), Url::to(['update', 'id' => $model->id]));
+                        return Html::a(Html::encode($model->title), Url::to(['/tasks/update', 'id' => $model->id]));
                     },
                     'format' => 'raw',
 
@@ -226,7 +226,7 @@ $dataProvider->query->andFilterWhere([
                 // 'task_complete',
                 // 'project_id',
 
-                ['class' => 'yii\grid\ActionColumn'],
+//                ['class' => 'yii\grid\ActionColumn'],
             ],
         ]); ?>
         <?php Pjax::end()?>
