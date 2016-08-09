@@ -24,7 +24,7 @@ $userId = Yii::$app->user->identity['id'];
 $query = Tasks::find()->andFilterWhere([
     'Status'=>1,
     'worker'=>$userId,
-    'periodic'=>1
+    'periodic'=>0
 ]);
 $dataProvider = new ActiveDataProvider([
     'query' => $query,
