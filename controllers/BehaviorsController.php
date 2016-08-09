@@ -31,6 +31,7 @@ class BehaviorsController extends Controller{
                         'roles' => ['?']
                     ],
 
+
                     [
                         'allow' => true,
                         'controllers' => ['main'],
@@ -77,6 +78,13 @@ class BehaviorsController extends Controller{
 
                         'verbs' => ['GET','POST'],
                         'roles' => ['@']
+                    ],
+                    [
+                        'allow' => true,
+                        'controllers' => ['tasks'],
+                        'actions' => ['periodic'],
+                        'verbs' => ['GET','POST'],
+                        'roles' => ['?']
                     ],
                 ]
             ]
