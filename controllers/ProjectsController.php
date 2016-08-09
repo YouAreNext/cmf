@@ -76,19 +76,22 @@ class ProjectsController extends BehaviorsController
     {
         $model = $this->findModel($id);
 
+
         if(Yii::$app->request->isAjax){
-            if(Yii::$app->request->post()){
-                $checklist =  json_encode(Yii::$app->request->post());
-                $model->checklist=$checklist;
-                $model->save();
-                Yii::$app->response->format = 'json';
-                return $checklist;
-            }
-            else if(Yii::$app->request->get()){
-                $checklist = $model->checklist;
-                return $checklist;
-            }
+            $getChecklist = Yii::$app->request->get('checklist');
+            if($getChecklist == 1) {
+                if (Yii::$app->request->post()) {
+                    $checklist = json_encode(Yii::$app->request->post());
+                    $model->checklist = $checklist;
+                    $model->save();
+                    Yii::$app->response->format = 'json';
+                    return $checklist;
+                } else if (Yii::$app->request->get()) {
+                    $checklist = $model->checklist;
+                    return $checklist;
+                }
 //            return json_encode(Yii::$app->request->post());
+            }
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['/projects']);

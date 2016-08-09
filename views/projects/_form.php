@@ -253,7 +253,7 @@ $dataProvider->query->andFilterWhere([
         return data;
     }
     $.ajax({
-        url: 'update?id='+parseUrlQuery().id,
+        url: 'update?id='+parseUrlQuery().id+'&checklist=1',
         type: "GET",
         dataType: 'json',
 
