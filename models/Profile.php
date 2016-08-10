@@ -34,7 +34,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         return [
             [['birthday', 'gender'], 'integer'],
-            [['avatar'], 'string', 'max' => 255],
+            [['avatar','email'], 'string', 'max' => 255],
             [['first_name', 'second_name', 'middle_name'], 'string', 'max' => 32],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -68,6 +68,7 @@ class Profile extends \yii\db\ActiveRecord
         $profile = ($profile = Profile::findOne(Yii::$app->user->id)) ? $profile : new Profile();
         $profile->user_id = Yii::$app->user->id;
         $profile->first_name = $this->first_name;
+        $profile->email = $this->email;
         $profile->second_name = $this->second_name;
         $profile->middle_name = $this->middle_name;
         return $profile->save() ? true : false;

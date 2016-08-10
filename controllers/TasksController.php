@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use yii\swiftmailer;
 
 
 /**
@@ -80,6 +81,7 @@ class TasksController extends BehaviorsController
             $event->start = date($eve->finish_date);
             $tasks[] = $event;
         }
+
         return $this->render('calendar', [
             'events' => $tasks,
         ]);
@@ -268,7 +270,20 @@ class TasksController extends BehaviorsController
 
         $model = new Tasks();
         $model->created_at=date('Y-m-d');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            //Отправка почты
+
+            $SendUser = $model->worker;
+            $SendTo = \app\models\Profile::find()->where(['user_id'=>$SendUser])->one()->email;
+
+            Yii::$app->mailer->compose('register',['model'=>$model])
+                ->setFrom('crm@it-invest.pro')
+                ->setTo($SendTo)
+                ->setSubject('Новая задача!')
+                ->send();
+
 
             return $this->redirect(['view', 'id' => $model->id]);
 

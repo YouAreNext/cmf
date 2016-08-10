@@ -8,6 +8,12 @@ use app\models\User;
 /* @var $form ActiveForm */
 ?>
 
+<?php
+    $userId = Yii::$app->user->identity['id'];
+
+    $pew = \app\models\Profile::find()->where(['user_id'=>$userId])->one()->email;
+?>
+
 <div class="main-profile">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -16,6 +22,7 @@ use app\models\User;
         <?= $form->field($model, 'first_name') ?>
         <?= $form->field($model, 'second_name') ?>
         <?= $form->field($model, 'middle_name') ?>
+        <?= $form->field($model, 'email') ?>
     
         <div class="form-group">
             <?= Html::submitButton('Редактировать', ['class' => 'btn btn-primary']) ?>

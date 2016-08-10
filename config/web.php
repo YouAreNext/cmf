@@ -34,11 +34,11 @@ $config = [
             'useFileTransport' => false,
             'transport'=>[
               'class' => 'Swift_SmtpTransport',
-                'host'=>'localhost',
-                'username'=>'username',
-                'password'=>'password',
-                'port'=>'587',
-                'encryption'=>'tls'
+                'host'=>'smtp.yandex.ru',
+                'username'=>'crm@it-invest.pro',
+                'password'=>'135462crm',
+                'port'=>'465',
+                'encryption'=>'ssl'
             ],
         ],
 

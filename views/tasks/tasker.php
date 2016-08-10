@@ -43,7 +43,7 @@ $workers = User::find()->all();
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
-
+                'pjax'=>true,
                 'columns' => [
 
                     'title',
@@ -120,17 +120,37 @@ $workers = User::find()->all();
                 'dataProvider' => $dataProvider2,
                 'filterModel' => $searchModel2,
                 'responsive'=>true,
+
                 'columns' => [
 
                     'title',
 
                     [
-                        'attribute' => 'worker',
-                        'format' => 'text',
-                        'label' => 'Исполнитель',
-                        'value' => 'user.username'
-                    ],
+                        'attribute'=>'worker',
+                        'value'=>'user.username',
+                        'filter'=>ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),
 
+                    ],
+                    [
+                        'attribute'=>'finish_date',
+                        'value'=>'finish_date',
+                        'filterType' => GridView::FILTER_DATE_RANGE,
+                        'filterWidgetOptions' =>([
+                            'model'=>$searchModel,
+                            'attribute'=>'finish_date',
+                            'presetDropdown'=>TRUE,
+                            'convertFormat'=>true,
+                            'pluginOptions'=>[
+                                'locale'=>[
+                                    'format'=>'Y-m-d',
+                                    'separator'=>' to ',
+                                ],
+                                'opens'=>'left'
+                            ]
+
+                        ])
+
+                    ],
 
                     [
                         'attribute'=>'project_id',
@@ -141,6 +161,7 @@ $workers = User::find()->all();
                 ],
             ]); ?>
         </div>
+
     </div>
 
 </div>
