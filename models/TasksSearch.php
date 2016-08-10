@@ -21,9 +21,11 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['id', 'Status', 'created_at', 'finish_date', 'task_complete', 'worker'], 'integer'],
+            [['id', 'Status', 'created_at', 'task_complete', 'worker'], 'integer'],
             [['title', 'description', 'project_id'], 'safe'],
-            [['project'],'safe']
+            [['project'],'safe'],
+
+            [['finish_date'],'date','format'=>'yyyy-mm-dd']
         ];
     }
 
@@ -59,8 +61,20 @@ class TasksSearch extends Tasks
 
         ]);
 
-        $this->load($params);
 
+
+
+
+
+        $this->load($params);
+        $finish = $this->finish_date;
+
+
+        if ( ! is_null($this->finish_date) && strpos($this->finish_date, 'to') !== false ) {
+            list($start_date, $end_date) = explode('to', $this->finish_date);
+            $query->andFilterWhere(['between', 'finish_date', $start_date, $end_date]);
+            $this->finish_date = null;
+        }
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');

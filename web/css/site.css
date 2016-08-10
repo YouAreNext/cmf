@@ -386,6 +386,10 @@ textarea{
     color: #2c485e;
 }
 
+.modal-backdrop{
+    z-index: 20;
+}
+
 .popup-side{
     transition: 0.3s;
     position: absolute;

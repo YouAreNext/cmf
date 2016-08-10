@@ -66,13 +66,34 @@ $workers = User::find()->all();
                             'attribute'=>'finish_date',
                             'presetDropdown'=>TRUE,
                             'convertFormat'=>true,
+
                             'pluginOptions'=>[
-                                'format'=>'Y-m-d',
+                                'locale'=>[
+                                    'format'=>'Y-m-d',
+                                    'separator'=>' to ',
+                                ],
                                 'opens'=>'left'
                             ]
+
                         ])
 
                     ],
+//                    [
+//                        'attribute'=>'finish_date',
+//                        'value'=>'finish_date',
+//                        'filter'=>DatePicker::widget([
+//                            'model' => $searchModel,
+//                            'attribute' => 'date_from',
+//                            'attribute2' => 'date_to',
+//                            'options' => ['placeholder' => 'Start date'],
+//                            'options2' => ['placeholder' => 'End date'],
+//                            'type' => DatePicker::TYPE_RANGE,
+//                            'pluginOptions' => [
+//                                'format' => 'yyyy-mm-dd',
+//                                'autoclose' => true,
+//                            ]
+//                        ])
+//                    ],
 
                     [
                         'attribute'=>'project_id',
@@ -109,10 +130,7 @@ $workers = User::find()->all();
                         'label' => 'Исполнитель',
                         'value' => 'user.username'
                     ],
-                    [
-                        'attribute'=>'finish_date',
-                        'value'=>'finish_date',
-                    ],
+
 
                     [
                         'attribute'=>'project_id',
