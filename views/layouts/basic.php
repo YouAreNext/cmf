@@ -8,6 +8,12 @@ use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
 $this->beginPage();
+$userIdTask = Yii::$app->user->identity['id'];
+$MyTaskCount = \app\models\Tasks::find()->where([
+    'Status' => 1,
+    'worker'=> $userIdTask
+    ])
+    ->count();
 ?>
 <!-- @var $content string -->
 <!--@var $this \yii\web\View -->
@@ -27,8 +33,20 @@ $this->beginPage();
 <div class="side-panel">
     <a href="/main/profile" class="side-panel-item side-panel-profile"></a>
     <a href="/tasks" class="side-panel-item side-panel-list"></a>
-    <a href="/tasks/calendar" class="side-panel-item side-panel-calendar"></a>
-    <a href="/tasks/complete" class="side-panel-item side-panel-complete"></a>
+    <div class="side-panel-item side-panel-calendar-popup for-popup-side">
+        <div class="popup-side">
+            <a href="/tasks/mycalendar" class="side-panel-item side-panel-mycalendar">
+                <span class="task-count"><?=$MyTaskCount?></span>
+                Мои задачи
+            </a>
+            <a href="#" class="side-panel-item side-panel-oncheck">Задачи на проверке</a>
+            <a href="/tasks/calendar" class="side-panel-item side-panel-calendar">Все задачи</a>
+            <a href="/tasks/complete" class="side-panel-item side-panel-complete">Выполненные задачи</a>
+
+        </div>
+    </div>
+
+
 </div>
 <?php $this->beginBody(); ?>
     <div class="wrap">

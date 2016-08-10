@@ -17,6 +17,7 @@ use kartik\date\DatePicker;
 
 $this->title = 'Задачи';
 $this->params['breadcrumbs'][] = $this->title;
+$workers = User::find()->all();
 ?>
 <div class="tasks-index">
 
@@ -34,35 +35,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="tab-content">
         <div class="projects-form tab-pane fade in active " id="active">
 
-<!--            --><?php
-//                $gridColumns = [
-//                    'title',
-//                    'description:text',
-//                    'finish_date',
-//                ];
-//
-//
-//            echo ExportMenu::widget([
-//                'dataProvider'=>$dataProvider,
-//                'columns'=>$gridColumns
-//            ])
-//
-//            ?>
+            <?php
+                $workers = User::find()->all();
+            ?>
 
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
-                'hover' => true,
 
                 'columns' => [
 
                     'title',
-                    'description:text',
+
+
 
                     [
-                        'attribute' => 'worker',
-                        'value' => 'user.username'
+                        'attribute'=>'worker',
+                        'value'=>'user.username',
+                        'filter'=>ArrayHelper::map(User::find()->asArray()->all(), 'id', 'username'),
+
                     ],
 
                     [
@@ -84,8 +76,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     [
                         'attribute'=>'project_id',
-                        'value'=>'project.Title'
+                        'value'=>'project.Title',
+                        'filter'=>Select2::widget([
+                            'attribute'=>'project_id',
+                            'model' => $searchModel,
+                            'data' => ArrayHelper::map(Projects::find()->all(),'id','Title'),
+
+                            // ... other params
+                            'options' => ['placeholder' => 'Проект...'],
+                        ]),
+
+                        'width'=>'200px'
                     ],
+
                     ['class' => 'kartik\grid\ActionColumn'],
                 ],
             ]); ?>
@@ -96,11 +99,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider2,
                 'filterModel' => $searchModel2,
                 'responsive'=>true,
-
                 'columns' => [
 
                     'title',
-                    'description:text',
+
                     [
                         'attribute' => 'worker',
                         'format' => 'text',
@@ -110,26 +112,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute'=>'finish_date',
                         'value'=>'finish_date',
-                        'filterType' => GridView::FILTER_DATE_RANGE,
-                        'filterWidgetOptions' =>([
-                            'model'=>$dataProvider2,
-                            'attribute'=>'finish_date',
-                            'presetDropdown'=>TRUE,
-                            'convertFormat'=>true,
-                            'pluginOptions'=>[
-                                'format'=>'Y-m-d',
-                                'opens'=>'left'
-                            ]
-                        ])
-
                     ],
 
                     [
                         'attribute'=>'project_id',
                         'value'=>'project.Title',
-
                     ],
-
 
                     ['class' => 'kartik\grid\ActionColumn'],
                 ],

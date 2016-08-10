@@ -6,6 +6,9 @@ use kartik\grid\GridView;
 use app\models\Tasks;
 use yii\helpers\Url;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\Projects;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TasksSearch */
@@ -35,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
-                'pjax'=>true,
+
 
                 'columns' => [
 
@@ -51,8 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
 //
 //                    ],
                     'title',
-
-                    'description:text',
 //                    [
 //                        'attribute'=>'Дата окончания',
 //                        'value'=>'task_complete',
@@ -81,12 +82,22 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ],
                     //'Status',
 
+
+                    'finish_date',
                     [
                         'attribute'=>'project_id',
-                        'value'=>'project.Title'
+                        'value'=>'project.Title',
+                        'filter'=>Select2::widget([
+                            'attribute'=>'project_id',
+                            'model' => $searchModel,
+                            'data' => ArrayHelper::map(Projects::find()->all(),'id','Title'),
 
+                            // ... other params
+                            'options' => ['placeholder' => 'Проект...'],
+                        ]),
+
+                        'width'=>'200px'
                     ],
-                    'finish_date',
 
                     // 'created_at',
                     // 'finish_date',
@@ -101,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider2,
                 'filterModel' => $searchModel2,
-                'pjax'=>true,
+
                 'columns' => [
 
 
@@ -116,7 +127,6 @@ $this->params['breadcrumbs'][] = $this->title;
 //
 //                    ],
                     'title',
-                    'description:text',
 //             [
 //
 //                'attribute' => 'worker',
@@ -126,12 +136,13 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ],
                     //'Status',
 
+
+                    'finish_date',
                     [
                         'attribute'=>'project_id',
                         'value'=>'project.Title'
 
                     ],
-                    'finish_date',
 
                     // 'created_at',
                     // 'finish_date',

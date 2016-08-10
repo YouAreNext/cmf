@@ -330,9 +330,76 @@ textarea{
     background: url(../assets/images/icons/calendar.png) no-repeat center;
 }
 .side-panel-complete{
-    background: url(../assets/images/icons/calendar-complete.png) no-repeat center;
+     background: url(../assets/images/icons/calendar-complete.png) no-repeat center;
+ }
+.side-panel-calendar-popup{
+    background: url(../assets/images/icons/calendar-popup.png) no-repeat center;
+}
+.side-panel-oncheck{
+    background: url(../assets/images/icons/calendar-oncheck.png) no-repeat center;
+}
+.side-panel-mycalendar{
+    background: url(../assets/images/icons/calendar-my.png) no-repeat center;
+}
+.side-panel-calendar-popup{
+    position: relative;
 }
 
+
+
+.popup-side .side-panel-item{
+    position: relative;
+    background-position: 260px center;
+    color:#FFF;
+    line-height: 60px;
+    padding-left: 60px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-weight: bold;
+}
+.navbar{
+    z-index: 50;
+}
+.for-popup-side:hover{
+    z-index: 20;
+}
+.side-panel:hover{
+    z-index: 20;
+}
+.for-popup-side:hover .popup-side{
+    top:0px;
+    opacity: 1;
+    transition: 0.3s;
+    z-index: 20;
+}
+.task-count{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    margin-top: -15px;
+    background: #D5D0BB;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    color: #2c485e;
+}
+
+.popup-side{
+    transition: 0.3s;
+    position: absolute;
+    width: 300px;
+    height: auto;
+    top:40px;
+    left: 60px;
+    opacity: 0;
+    background: #6D84C5;
+}
+.container{
+    position: relative;
+    z-index: 10;
+}
 .fullcalendar{
     margin-top: 80px;
 }
@@ -602,7 +669,7 @@ label{
 }
 a:hover{
     text-decoration: none;
-    color:#FFF;
+    color:#55559A;
 }
 
 .period-task-item{

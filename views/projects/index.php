@@ -25,8 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'Title',
             'site_addr',
-            'seo_theme',
-            
+
+            'seo_type',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

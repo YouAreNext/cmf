@@ -26,7 +26,9 @@ $(function(){
         $(".todo-list").append(todoItem);
     })
     $("body").on("click",".todo-delete",function(){
-        $(this).parent(".todo-item").remove();
+        if(confirm("Уверены, что хотите войти?")){
+            $(this).parent(".todo-item").remove();
+        }
     })
 
 

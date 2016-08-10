@@ -166,12 +166,7 @@ $dataProvider->query->andFilterWhere([
         <?php ActiveForm::end(); ?>
     </div>
     <div class="projects-form tab-pane fade" id="props">
-        <div class="btn btn-info collapsed" data-toggle="collapse" data-target="#hide-me2" aria-expanded="false">
-            <span class="glyphicon glyphicon-chevron-down"></span>
-            Контрагенты</div>
-        <div id="hide-me2" class="collapse">
 
-        </div>
         <div class="btn btn-info collapsed" data-toggle="collapse" data-target="#hide-me" aria-expanded="false">
             <span class="glyphicon glyphicon-chevron-down"></span>
             Чек-Лист</div>
@@ -182,7 +177,12 @@ $dataProvider->query->andFilterWhere([
             <div class="btn btn-success check-confirm" data-id=<?=$model->id?> >Обновить</div>
         </div>
 
+        <div class="btn btn-info collapsed" data-toggle="collapse" data-target="#hide-me2" aria-expanded="false">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+            Контрагенты</div>
+        <div id="hide-me2" class="collapse">
 
+        </div>
     </div>
     <div id="menu1" class="tab-pane fade">
         <div class="btn btn-success right-button add-task-project" data-date=<?php echo date('Y-m-d')?>>
@@ -201,7 +201,7 @@ $dataProvider->query->andFilterWhere([
                 // 'id',
 
                 [
-                    'attribute' => 'Title',
+                    'attribute' => 'Ссылка',
                     'value' => function (Tasks $model) {
                         return Html::a(Html::encode($model->title), Url::to(['/tasks/update', 'id' => $model->id]));
                     },
@@ -209,7 +209,7 @@ $dataProvider->query->andFilterWhere([
 
                 ],
                 'title',
-                'description:text',
+                'worker',
 //             [
 //
 //                'attribute' => 'worker',
@@ -219,7 +219,7 @@ $dataProvider->query->andFilterWhere([
 //            ],
                 //'Status',
 
-                'project.Title',
+
 
                 // 'created_at',
                 // 'finish_date',

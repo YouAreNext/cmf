@@ -56,7 +56,7 @@ class TasksController extends BehaviorsController
 
     }
 
-
+//Все задачи
     public function actionCalendar()
     {
 
@@ -64,7 +64,6 @@ class TasksController extends BehaviorsController
             debug(Yii::$app->request->post());
             return 'test';
         }
-
 
         $events = Tasks::find()->where([
             'Status'=>1,
@@ -85,6 +84,43 @@ class TasksController extends BehaviorsController
             'events' => $tasks,
         ]);
     }
+    //Мои задачи
+    public function actionMycalendar()
+    {
+        $userId = Yii::$app->user->identity['id'];
+
+        if(Yii::$app->request->isAjax){
+            debug(Yii::$app->request->post());
+            return 'test';
+        }
+
+        $events = Tasks::find()->where([
+
+            'periodic' => 0,
+            'worker' => $userId
+        ])->all();
+
+        $tasks = [];
+
+        foreach ($events as $eve) {
+            if ($eve->Status == 1){
+                $TaskClass = '';
+            } elseif($eve->Status == 2){
+                $TaskClass = 'task-finished';
+            }
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $eve->id;
+            $event->className = $TaskClass;
+            $event->url = 'update?id='.$eve->id;
+            $event->title = $eve->title;
+            $event->start = date($eve->finish_date);
+            $tasks[] = $event;
+        }
+        return $this->render('calendar', [
+            'events' => $tasks,
+        ]);
+    }
+
     public function actionComplete()
     {
         $events = Tasks::find()->where([
@@ -94,9 +130,9 @@ class TasksController extends BehaviorsController
         $tasks = [];
 
         foreach ($events as $eve) {
+
             $event = new \yii2fullcalendar\models\Event();
             $event->id = $eve->id;
-
             $event->className = 'task-finished';
             $event->title = $eve->title;
             $event->start = date($eve->finish_date);
@@ -167,10 +203,6 @@ class TasksController extends BehaviorsController
 
 
 
-
-
-
-
         $dataProvider = Tasks::find()->andFilterWhere([
             'periodic' => 1
         ]);
@@ -206,15 +238,8 @@ class TasksController extends BehaviorsController
                 $model->Status = '1';
                 $model->finish_date = $finish_date;
                 $model->project_id = $project_id;
-                var_dump($model->project_id);
                 $model->created_at = (date('Y-m-d'));
-
-
-
-
-
                 $model->save();
-
 
             }else{
                 echo 'неравно';
