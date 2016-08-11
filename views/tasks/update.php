@@ -26,10 +26,10 @@ echo $TaskCreator;
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="task-creator">
     Задачу назначил:<?php
-
+        if (isset(Profile::find()->where(['user_id'=>$TaskCreator])->one()->first_name)) {
             echo '&nbsp' .Profile::find()->where(['user_id'=>$TaskCreator])->one()->first_name.'&nbsp '.
                 Profile::find()->where(['user_id'=>$TaskCreator])->one()->second_name;
-
+        }
         ?>
     </div>
     <div class="btn btn-success right-button add-task-sub" data-id=<?php echo $model->id ?>>
