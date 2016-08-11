@@ -16,6 +16,7 @@ use dosamigos\datepicker\DatePicker;
 <div class="tasks-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
         <div class="row">
             <div class="col-md-4">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>

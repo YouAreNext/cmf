@@ -27,6 +27,8 @@ class TasksController extends BehaviorsController
      * Lists all Tasks models.
      * @return mixed
      */
+
+
     public function actionIndex()
     {
         $userId = Yii::$app->user->identity['id'];
@@ -168,6 +170,7 @@ class TasksController extends BehaviorsController
             'dataProvider' => $dataProvider,
             'searchModel2' => $searchModel2,
             'dataProvider2' => $dataProvider2,
+            'userId' => $userId
         ]);
     }
 
@@ -268,8 +271,15 @@ class TasksController extends BehaviorsController
     public function actionCreate()
     {
 
+
         $model = new Tasks();
+
+        $userId = Yii::$app->user->identity['id'];
+
+        //Параметры при создании задачи
         $model->created_at=date('Y-m-d');
+        $model->task_creator=$userId;
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
@@ -285,7 +295,7 @@ class TasksController extends BehaviorsController
                 ->send();
 
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['update', 'id' => $model->id]);
 
         } else {
             return $this->render('create', [

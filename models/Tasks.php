@@ -37,7 +37,7 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [[ 'title', 'description', 'Status', 'worker','finish_date', 'created_at'], 'required'],
-            [[ 'Status', 'worker', 'project_id','prev_task','periodic'], 'integer'],
+            [[ 'Status', 'worker', 'project_id','prev_task','periodic','task_creator'], 'integer'],
             [['description','worker_comment'], 'string'],
             [['created_at', 'finish_date', 'task_complete'],'date','format'=>'yyyy-mm-dd'],
             [['title'], 'string', 'max' => 255],

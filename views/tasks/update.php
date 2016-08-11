@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use app\models\Tasks;
-
+use app\models\Profile;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tasks */
@@ -15,16 +15,23 @@ $this->params['breadcrumbs'][] = 'Обзор задачи';
 
 
 $thisProject = $model->id;
-
-
-
+$userId = Yii::$app->user->identity['id'];
+$TaskCreator = $model->task_creator;
+echo $TaskCreator;
 ?>
 
 
 <div class="tasks-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <div class="task-creator">
+    Задачу назначил:<?php
 
+            echo '&nbsp' .Profile::find()->where(['user_id'=>$TaskCreator])->one()->first_name.'&nbsp '.
+                Profile::find()->where(['user_id'=>$TaskCreator])->one()->second_name;
+
+        ?>
+    </div>
     <div class="btn btn-success right-button add-task-sub" data-id=<?php echo $model->id ?>>
         Добавить подзадачу
     </div>
