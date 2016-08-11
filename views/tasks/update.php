@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = 'Обзор задачи';
 $thisProject = $model->id;
 $userId = Yii::$app->user->identity['id'];
 $TaskCreator = $model->task_creator;
-echo $TaskCreator;
+
 ?>
 
 
@@ -25,7 +25,7 @@ echo $TaskCreator;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="task-creator">
-    Задачу назначил:<?php
+    Задачу назначил(а):<?php
         if (isset(Profile::find()->where(['user_id'=>$TaskCreator])->one()->first_name)) {
             echo '&nbsp' .Profile::find()->where(['user_id'=>$TaskCreator])->one()->first_name.'&nbsp '.
                 Profile::find()->where(['user_id'=>$TaskCreator])->one()->second_name;
