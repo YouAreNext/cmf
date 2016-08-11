@@ -23,17 +23,39 @@ use dosamigos\datepicker\DatePicker;
 
                 <?php
                     $workers = User::find()->all();
-                    $items = ArrayHelper::map($workers,'id','username');
+                    $workers = \app\models\Profile::find()->all();
+                    $items = ArrayHelper::map($workers,'user_id','first_name');
+
                     $params = [
                       'prompt' => 'Укажите исполнителя'
                     ];
                     echo $form->field($model, 'worker')->dropDownList($items,$params);
                 ?>
                 <?php
+
+
+                if(isset($model->task_creator)){
+                    if($model->Status == 1){
+                        echo $form->field($model, 'Status')->dropDownList([
+                            '1' => 'Активная задача',
+                            '3' => 'Отправить на проверку',
+                        ]);
+                    } else if(($model->Status == 3)&& $userId == $model->task_creator){
+                        echo $form->field($model, 'Status')->dropDownList([
+                            '1' => 'Вернуть на доработку',
+                            '3' => 'Отправить на проверку',
+                            '2' => 'Завершено',
+                        ]);
+                    } else if($model->Status == 3){
+                        echo '<div class="task-checking">Задача находится на проверке!</div>';
+                    }
+                } else{
                     echo $form->field($model, 'Status')->dropDownList([
                         '1' => 'Активная задача',
-                        '2' => 'Завершено'
+                        '2' => 'Завершить задачу',
                     ]);
+                }
+
                 ?>
 
                 <?= $form->field($model, 'project_id')->widget(Select2::classname(), [

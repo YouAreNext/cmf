@@ -39,7 +39,7 @@ $TaskCreator = $model->task_creator;
     <div style="clear:both"></div>
     <?= $this->render('_form', [
         'model' => $model,
-
+        'userId'=>$userId
     ]) ?>
 
 </div>

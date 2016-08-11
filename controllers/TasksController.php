@@ -88,8 +88,8 @@ class TasksController extends BehaviorsController
             'events' => $tasks,
         ]);
     }
-    //Мои задачи
-    public function actionMycalendar()
+
+    public function actionChecking()
     {
         $userId = Yii::$app->user->identity['id'];
 
@@ -99,13 +99,40 @@ class TasksController extends BehaviorsController
         }
 
         $events = Tasks::find()->where([
+            'Status'=>3,
+            'periodic' => 0,
+            'task_creator' => $userId
+        ])->all();
+        $tasks = [];
+        foreach ($events as $eve) {
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $eve->id;
+            $event->url = 'update?id='.$eve->id;
+            $event->title = $eve->title;
+            $event->start = date($eve->finish_date);
+            $tasks[] = $event;
+        }
 
+        return $this->render('checking', [
+            'events' => $tasks,
+        ]);
+    }
+
+
+    //Мои задачи
+    public function actionMycalendar()
+    {
+        $userId = Yii::$app->user->identity['id'];
+
+        if(Yii::$app->request->isAjax){
+            debug(Yii::$app->request->post());
+            return 'test';
+        }
+        $events = Tasks::find()->where([
             'periodic' => 0,
             'worker' => $userId
         ])->all();
-
         $tasks = [];
-
         foreach ($events as $eve) {
             if ($eve->Status == 1){
                 $TaskClass = '';
@@ -139,6 +166,7 @@ class TasksController extends BehaviorsController
             $event->id = $eve->id;
             $event->className = 'task-finished';
             $event->title = $eve->title;
+            $event->url = 'update?id='.$eve->id;
             $event->start = date($eve->finish_date);
             $tasks[] = $event;
         }
@@ -278,13 +306,12 @@ class TasksController extends BehaviorsController
 
         //Параметры при создании задачи
         $model->created_at=date('Y-m-d');
+        $model->Status = 1;
         $model->task_creator=$userId;
-
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             //Отправка почты
-
             $SendUser = $model->worker;
             $SendTo = \app\models\Profile::find()->where(['user_id'=>$SendUser])->one()->email;
 
@@ -300,6 +327,7 @@ class TasksController extends BehaviorsController
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'userId'=>$userId
             ]);
         }
     }
@@ -308,6 +336,7 @@ class TasksController extends BehaviorsController
         $model = new Tasks();
         $model->created_at=date('Y-m-d');
         $model->finish_date=$date;
+        $model->Status=1;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar']);
         } else {
@@ -344,12 +373,20 @@ class TasksController extends BehaviorsController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $userId = Yii::$app->user->identity['id'];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if(($model->Status == 3)&&($model->task_creator == $model->worker)){
+                $model->Status=2;
+            }
+            $model->save();
+            //Логика проверки задачи
             return $this->redirect(['index']);
+
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'userId'=>$userId
             ]);
         }
     }

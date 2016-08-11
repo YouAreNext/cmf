@@ -710,8 +710,12 @@ a:hover{
 .period-task-date .glyphicon-calendar:before{
     font-size: 24px;
 }
-
+.task-checking{
+    font-size: 20px;
+    margin-bottom: 25px;
+    margin-top: 36px;
+}
 .task-creator{
     font-size:20px;
-
+    float:left;
 }
