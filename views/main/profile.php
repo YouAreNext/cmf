@@ -8,11 +8,7 @@ use app\models\User;
 /* @var $form ActiveForm */
 ?>
 
-<?php
-    $userId = Yii::$app->user->identity['id'];
 
-    $pew = \app\models\Profile::find()->where(['user_id'=>$userId])->one()->email;
-?>
 
 <div class="main-profile">
 
