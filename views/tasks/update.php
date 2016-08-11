@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = 'Обзор задачи';
 $thisProject = $model->id;
 $userId = Yii::$app->user->identity['id'];
 $TaskCreator = $model->task_creator;
-echo $TaskCreator;
+
 ?>
 
 
