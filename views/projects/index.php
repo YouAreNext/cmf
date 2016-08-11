@@ -25,8 +25,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'Title',
             'site_addr',
+            [
+                'label'=>'Тип проекта',
+                'format'=>'text',
+                'attribute'=>'seo_type',
+                'value'=>function($model){
+                   switch($model->seo_type){
+                       case 0:
+                           return 'Обслуживание';
+                       case 1:
+                           return 'Минимальный';
+                       case 2;
+                           return 'Стандартный';
+                       case 3:
+                           return 'Максимальный';
+                       case 4:
+                           return 'Директ';
+                       case 5:
+                           return 'Разработка';
+                       case 6:
+                           return 'Менеджмент';
 
-            'seo_type',
+                   }
+
+                },
+                'filter'=>array(
+                    "0"=>"Обслуживание",
+                    "1"=>"Минимальный",
+                    "2"=>"Стандартный",
+                    "3"=>"Максимальный",
+                    "4"=>"Директ",
+                    "5"=>"Разработка",
+                    "6"=>"Менеджмент",
+                ),
+            ],
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
