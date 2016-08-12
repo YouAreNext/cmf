@@ -683,9 +683,14 @@ a:hover{
     color:#FFF;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    height: 60px;
+    overflow: hidden;
+    padding-right: 75px;
 
 }
-
+.period-worker{
+    font-size: 18px;
+}
 .period-task{
     height: 60px;
     line-height: 60px;
@@ -735,4 +740,25 @@ a:hover{
     font-size: 13px;
     font-weight: bold;
     color:#556080;
+}
+
+.sub-status{
+    position: absolute;
+    right: 10px;
+    top:50%;
+    margin-top: -18px;
+    height: 36px;
+    width: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.sub-status1{
+    background-image: url(../assets/images/icons/task-progress.png);
+}
+.sub-status2{
+    background-image: url(../assets/images/icons/task-complete.png);
+}
+.sub-status3{
+    background-image: url(../assets/images/icons/task-view.png);
 }

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Tasks;
 use app\models\TasksSearch;
+use yii\debug\models\search\Profile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -353,10 +354,17 @@ class TasksController extends BehaviorsController
     }
     public function actionAjax($date)
     {
+
+
+
         $model = new Tasks();
         $model->created_at=date('Y-m-d');
         $model->finish_date=$date;
         $model->Status=1;
+
+        $userId = Yii::$app->user->identity['id'];
+        $model->task_creator=$userId;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
 
@@ -383,11 +391,14 @@ class TasksController extends BehaviorsController
 
     public function actionSub($date)
     {
+        $userId = Yii::$app->user->identity['id'];
         $model = new Tasks();
         $model->created_at=date('Y-m-d');
         $model->prev_task=$date;
+        $model->task_creator=$userId;
+        $model->Status = 1;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['calendar']);
+            return $this->redirect(Yii::$app->request->referrer);
         } else {
             return $this->renderAjax('sub', [
                 'model' => $model,
@@ -405,11 +416,25 @@ class TasksController extends BehaviorsController
     {
         $model = $this->findModel($id);
         $userId = Yii::$app->user->identity['id'];
-
+        $userFirstName = \app\models\Profile::find()->where(['user_id'=>$userId])->one()->first_name;
         if ($model->load(Yii::$app->request->post())) {
+
+            //Если задачу отправляет на проверку создатель она завершается
             if(($model->Status == 3)&&($model->task_creator == $model->worker)){
                 $model->Status=2;
             }
+
+            //Отправка E-mail по завершению
+            if(($model->worker) != $userId && $model->Status == 1){
+                $SendUser = $model->worker;
+                $SendTo = \app\models\Profile::find()->where(['user_id'=>$SendUser])->one()->email;
+                Yii::$app->mailer->compose('update',['model'=>$model,'userId'=>$userId])
+                    ->setFrom('crm@it-invest.pro')
+                    ->setTo($SendTo)
+                    ->setSubject('Задача изменена пользователем '.$userFirstName)
+                    ->send();
+            }
+
             $model->save();
             //Логика проверки задачи
             return $this->redirect(['index']);

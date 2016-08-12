@@ -1,5 +1,8 @@
 <?php
 
+use app\models\Tasks;
+use yii\data\ActiveDataProvider;
+use yii\widgets\ListView;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\User;
@@ -12,8 +15,13 @@ use dosamigos\datepicker\DatePicker;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-
-<div class="tasks-form">
+<ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#page1">Задача</a></li>
+    <li><a data-toggle="tab" href="#page2">Подзадачи</a></li>
+    <li><a data-toggle="tab" href="#page3">Файлы</a></li>
+</ul>
+<div class="tab-content tab-content-projects clearfix">
+<div class="tasks-form tab-pane fade in active" id="page1">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -126,4 +134,67 @@ use dosamigos\datepicker\DatePicker;
 
     <?php ActiveForm::end(); ?>
 
+</div>
+    <div class="tasks-form tab-pane fade in" id="page2">
+
+        <div class="row">
+            <?php
+            if ($model->isNewRecord){
+
+            }else{
+
+                $dataPeriodQuery = Tasks::find()->andFilterWhere([
+                    'prev_task' => $model->id,
+                ]);
+                $dataPeriod = new ActiveDataProvider([
+                    'query' => $dataPeriodQuery,
+                    'sort' => [
+                        'defaultOrder' =>['finish_date'=>SORT_ASC]
+                    ],
+
+                ]);
+
+
+
+                echo ListView::widget([
+                    'dataProvider' => $dataPeriod,
+                    'itemView' => function($dataPeriod){
+                        return '
+                    <a href="/tasks/update?id='.$dataPeriod->id.'" class="period-task-item col-md-6">
+                        '.$dataPeriod->title.'
+                        <span class="sub-status sub-status'.$dataPeriod->Status.'"></span>
+                    </a>
+                    <div class="col-md-3 period-worker">'.
+
+                        \app\models\Profile::find()->where(['user_id'=>$dataPeriod->worker])->one()->first_name
+                        .'</div>
+                    <div class="period-task-date col-md-3 "><span class="glyphicon glyphicon-calendar"></span>'.$dataPeriod->finish_date.' </div>
+
+                    ';
+                    },
+                    'options' => [
+                        'tag' => 'div',
+                        'class' => 'period-tasker',
+                    ],
+                    'itemOptions' => [
+                        'tag' => 'div',
+                        'class' => 'period-task col-md-12',
+                    ],
+                    'emptyText' => '<p>Нет подзадач</p>',
+                    'emptyTextOptions' => [
+                        'tag' => 'p'
+                    ],
+                    'summary' => '<p class="total-task">Всего подзадач: <span class="bold-span">{totalCount}</span></p>',
+                ]);
+
+
+            }
+            ?>
+
+        </div>
+
+    </div>
+    <div class="tasks-form tab-pane fade in" id="page3">
+
+    </div>
 </div>
