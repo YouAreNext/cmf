@@ -19,6 +19,7 @@ $MyTaskCheck= \app\models\Tasks::find()->where([
     'task_creator' => Yii::$app->user->identity['id']
 ])
     ->count();
+
 ?>
 <!-- @var $content string -->
 <!--@var $this \yii\web\View -->
@@ -77,6 +78,8 @@ $MyTaskCheck= \app\models\Tasks::find()->where([
                     'label' => 'SEO проекты',
                     'url' => ['/projects']
                 ],
+
+                '<li class="checker-task-li"><span class="checker-decor">'.$MyTaskCheck.'</span><a href="/tasks/checker">Проверка задач</a></li>',
                 [
                     'label' => 'Мои задачи',
                     'url' => ['/tasks/index']

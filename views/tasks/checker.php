@@ -29,8 +29,7 @@ $workers = User::find()->all();
     </p>
 
     <ul class="nav nav-pills">
-        <li class="active"><a data-toggle="tab" href="#active">Активные</a></li>
-        <li><a data-toggle="tab" href="#complete">Выполненные</a></li>
+        <li class="active"><a data-toggle="tab" href="#active">На проверке</a></li>
     </ul>
     <div class="tab-content">
         <div class="projects-form tab-pane fade in active " id="active">

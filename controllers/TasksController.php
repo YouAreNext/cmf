@@ -209,8 +209,9 @@ class TasksController extends BehaviorsController
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere([
-            'Status' => '1',
-            'periodic' => '0'
+            'Status' => '3',
+            'periodic' => '0',
+            'task_creator' => $userId
         ]);
 
 

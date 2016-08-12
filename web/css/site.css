@@ -719,3 +719,20 @@ a:hover{
     font-size:20px;
     float:left;
 }
+.checker-task-li{
+    position: relative;
+}
+.checker-decor{
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #FFF;
+    text-align: center;
+    line-height:15px;
+    font-size: 13px;
+    font-weight: bold;
+    color:#556080;
+}
