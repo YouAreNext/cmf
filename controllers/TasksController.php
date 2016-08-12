@@ -201,6 +201,25 @@ class TasksController extends BehaviorsController
             'userId' => $userId
         ]);
     }
+    public function actionChecker()
+    {
+        $userId = Yii::$app->user->identity['id'];
+
+        $searchModel = new TasksSearch();
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere([
+            'Status' => '1',
+            'periodic' => '0'
+        ]);
+
+
+        return $this->render('checker', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'userId' => $userId
+        ]);
+    }
 
     /**
      * Displays a single Tasks model.
@@ -338,6 +357,17 @@ class TasksController extends BehaviorsController
         $model->finish_date=$date;
         $model->Status=1;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+
+            $SendUser = $model->worker;
+            $SendTo = \app\models\Profile::find()->where(['user_id'=>$SendUser])->one()->email;
+
+            Yii::$app->mailer->compose('register',['model'=>$model])
+                ->setFrom('crm@it-invest.pro')
+                ->setTo($SendTo)
+                ->setSubject('Новая задача!')
+                ->send();
+
             return $this->redirect(['calendar']);
         } else {
             return $this->renderAjax('ajax', [

@@ -38,7 +38,7 @@ class Projects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['site_addr', 'seo_type','Title'], 'required'],
+            [['site_addr', 'seo_type','Title','project_chief'], 'required'],
             [['seo_type','project_chief'], 'integer'],
             [['Commentary','Title','checklist'],'string'],
             [['report_day'],'date','format'=>'yyyy-mm-dd'],

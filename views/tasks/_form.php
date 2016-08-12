@@ -48,7 +48,14 @@ use dosamigos\datepicker\DatePicker;
                         ]);
                     } else if($model->Status == 3){
                         echo '<div class="task-checking">Задача находится на проверке!</div>';
+                    }else if(($model->Status == 2)&& $userId == $model->task_creator){
+                        echo $form->field($model, 'Status')->dropDownList([
+                            '1' => 'Вернуть на доработку',
+                            '2' => 'Завершено',
+                        ]);
                     }
+
+
                 } else{
                     echo $form->field($model, 'Status')->dropDownList([
                         '1' => 'Активная задача',
@@ -72,16 +79,16 @@ use dosamigos\datepicker\DatePicker;
                 <div class="col-md-6 wpad">
                     <?= $form->field($model, 'finish_date')->widget(
                         DatePicker::className(), [
-                        // inline too, not bad
-                        'inline' => false,
-                        'language' =>'ru',
-                        // modify template for custom rendering
-                        //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-                        'clientOptions' => [
-                            'autoclose' => true,
-
-                            'format' => 'yyyy-mm-dd'
-                        ]
+                            // inline too, not bad
+                            'inline' => false,
+                            // modify template for custom rendering
+                            'language'=>'ru',
+                            'clientOptions' => [
+                                'autoclose' => true,
+                                'format' => 'yyyy-mm-dd',
+                                'todayBtn' => true,
+                                'todayHighlight' => true,
+                            ]
                     ]);?>
                 </div>
 
@@ -97,19 +104,6 @@ use dosamigos\datepicker\DatePicker;
         <div class="row">
             <div class="col-md-4">
 <!--
-                <?= $form->field($model, 'task_complete')->widget(
-                    DatePicker::className(), [
-                    // inline too, not bad
-                    'inline' => false,
-                    'language' =>'ru',
-                    // modify template for custom rendering
-                    //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-                    'clientOptions' => [
-                        'autoclose' => true,
-
-                        'format' => 'yyyy-mm-dd'
-                    ]
-                ]);?>
 -->
 
             </div>
