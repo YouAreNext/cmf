@@ -16,11 +16,32 @@ use yii\helpers\Url;
 /* @var $model app\models\Tasks */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<?php
+if($model->isNewRecord){}else {
+    $fileCount = \app\models\Files::find()->where([
+        'parent_id' => $model->id,
+        'parent_type' => 1
+    ])->count();
 
+    $subCount = Tasks::find()->where([
+        'prev_task'=>$model->id,
+
+    ])->count();
+}
+
+?>
 <ul class="nav nav-tabs nav-justified">
     <li class="active"><a data-toggle="tab" href="#page1">Задача</a></li>
-    <li><a data-toggle="tab" href="#page2">Подзадачи</a></li>
-    <li><a data-toggle="tab" href="#page3">Файлы</a></li>
+    <li><a data-toggle="tab" href="#page2">Подзадачи
+        <span class="file-count">
+            <?=$subCount?>
+        </span>
+        </a></li>
+    <li><a data-toggle="tab" href="#page3">Файлы
+        <span class="file-count">
+            <?=$fileCount?>
+        </span>
+        </a></li>
 </ul>
 <div class="tab-content tab-content-projects clearfix">
 <div class="tasks-form tab-pane fade in active" id="page1">
@@ -120,16 +141,6 @@ use yii\helpers\Url;
         </div>
 
 
-
-
-
-
-
-
-
-
-
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
@@ -197,6 +208,7 @@ use yii\helpers\Url;
 
     </div>
     <div class="tasks-form tab-pane fade in" id="page3">
+
         <h3>Файлы</h3>
 
         <?php $form2 = ActiveForm::begin(['action' => '/projects/upload','options' => ['enctype' => 'multipart/form-data']]) ?>

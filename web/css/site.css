@@ -244,12 +244,14 @@ h1{
 .nav-tabs.nav-justified > li > a{
     border:none;
     border-radius:0px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:hover, .nav-tabs.nav-justified > .active > a:focus{
 border:none;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .projects-form .btn{
@@ -275,6 +277,9 @@ border:none;
 
 .nav-tabs.nav-justified > li{
     text-transform: uppercase;
+    background: #FFF;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
     font-weight: bold;
 }
 
@@ -790,6 +795,17 @@ a:hover{
     border-radius: 5px;
 
 }
+.file-count{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    top:50%;
+    margin-top: -10px;
+    right:20px;
+    background: #3A87AD;
+    color:#FFF;
+}
 .file-link:hover{
     color:#FFF;
     background: #286090;
@@ -835,4 +851,8 @@ a:hover{
 
 .file-item-preview.all-file{
     background: url(../assets/images/icons/file.png) no-repeat center;
+}
+
+.nav-tabs.nav-justified{
+    border-bottom: 2px solid #3A87AD;
 }
