@@ -34,12 +34,20 @@ if($model->isNewRecord){}else {
     <li class="active"><a data-toggle="tab" href="#page1">Задача</a></li>
     <li><a data-toggle="tab" href="#page2">Подзадачи
         <span class="file-count">
-            <?=$subCount?>
+            <?php
+            if($model->isNewRecord){}else {
+                echo $subCount;
+            }
+            ?>
         </span>
         </a></li>
     <li><a data-toggle="tab" href="#page3">Файлы
         <span class="file-count">
-            <?=$fileCount?>
+            <?php
+            if($model->isNewRecord){}else {
+                echo $fileCount;
+            }
+            ?>
         </span>
         </a></li>
 </ul>

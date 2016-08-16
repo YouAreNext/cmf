@@ -32,12 +32,31 @@ $workers = User::find()->all();
         <li class="active"><a data-toggle="tab" href="#active">Активные</a></li>
         <li><a data-toggle="tab" href="#complete">Выполненные</a></li>
     </ul>
+    <?php
+
+        $gridColumns = [
+            'title',
+            'finish_date',
+            [
+                'attribute'=>'worker',
+                'value'=>'user.username'
+            ],
+            'description',
+            'worker_comment'
+        ];
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider2,
+            'columns' => $gridColumns
+        ])
+
+    ?>
     <div class="tab-content">
         <div class="projects-form tab-pane fade in active " id="active">
 
             <?php
                 $workers = User::find()->all();
             ?>
+
 
 
             <?= GridView::widget([
