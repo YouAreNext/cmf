@@ -236,78 +236,81 @@ $dataProvider->query->andFilterWhere([
     </div>
     <div id="menu2" class="tab-pane fade">
         <h3>Файлы</h3>
+
         <?php $form2 = ActiveForm::begin(['action' => '/projects/upload','options' => ['enctype' => 'multipart/form-data']]) ?>
         <?php
-         echo FileInput::widget([
-             'name'=>'file',
-             'language' => 'ru',
-             'options'=>[
-                 'multiple'=>true
-             ],
-             'pluginOptions'=>[
-                 'previewFileType' => 'any',
-                 'uploadUrl' => Url::to('/projects/upload?id='.$model->id.'&parent=0')
-             ]
+        if($model->isNewRecord){}else {
+            echo FileInput::widget([
+                'name' => 'file',
+                'language' => 'ru',
+                'options' => [
+                    'multiple' => true
+                ],
+                'pluginOptions' => [
+                    'previewFileType' => 'any',
+                    'uploadUrl' => Url::to('/projects/upload?id=' . $model->id . '&parent=0')
+                ]
 
-         ])
+            ]);
+        };
 
         ?>
         <?php ActiveForm::end()?>
 
         <div class="file-big-container">
-            <?php
-            echo ListView::widget([
-            'dataProvider' => $dataFile,
-            'itemOptions' => [
-                'tag' => 'div',
-                'class' => 'col-md-3 file-item',
-            ],
-            'itemView' => function($dataFile){
-                $file_ext = '';
-                switch($dataFile->extension){
-                    case 'jpg':
-                        $file_ext = 'jpg-file';
-                        break;
-                    case 'png':
-                        $file_ext = 'jpg-file';
-                        break;
-                    case 'docx':
-                        $file_ext = 'doc-file non-image';
-                        break;
-                    case 'doc':
-                        $file_ext = 'doc-file non-image';
-                        break;
-                    case 'xls':
-                        $file_ext = 'xls-file non-image';
-                        break;
-                    case 'xlsx':
-                        $file_ext = 'xls-file non-image';
-                        break;
-                    case 'rar':
-                        $file_ext = 'rar-file non-image';
-                        break;
-                    case 'pdf':
-                        $file_ext = 'pdf-file non-image';
-                        break;
-                    default:
-                        $file_ext = 'all-files non-image';
+            <?php if($model->isNewRecord){}else {
+                echo ListView::widget([
+                    'dataProvider' => $dataFile,
+                    'itemOptions' => [
+                        'tag' => 'div',
+                        'class' => 'col-md-3 file-item',
+                    ],
+                    'itemView' => function ($dataFile) {
+                        $file_ext = '';
+                        switch ($dataFile->extension) {
+                            case 'jpg':
+                                $file_ext = 'jpg-file';
+                                break;
+                            case 'png':
+                                $file_ext = 'jpg-file';
+                                break;
+                            case 'docx':
+                                $file_ext = 'doc-file non-image';
+                                break;
+                            case 'doc':
+                                $file_ext = 'doc-file non-image';
+                                break;
+                            case 'xls':
+                                $file_ext = 'xls-file non-image';
+                                break;
+                            case 'xlsx':
+                                $file_ext = 'xls-file non-image';
+                                break;
+                            case 'rar':
+                                $file_ext = 'rar-file non-image';
+                                break;
+                            case 'pdf':
+                                $file_ext = 'pdf-file non-image';
+                                break;
+                            default:
+                                $file_ext = 'all-files non-image';
 
-                }
-                return '
+                        }
+                        return '
                 <div class="file-item-block">
-                    <div class="file-item-preview '.$file_ext.'">
-                        <img src="../'.$dataFile->url.'" alt="">
+                    <div class="file-item-preview ' . $file_ext . '">
+                        <img src="../' . $dataFile->url . '" alt="">
                     </div>
                     <div class="file-item-title">
-                    '.$dataFile->file_name.'
+                    ' . $dataFile->file_name . '
                     </div>
-                    <a href="../'.$dataFile->url.'" download class="file-link">Скачать</a>
+                    <a href="../' . $dataFile->url . '" download class="file-link">Скачать</a>
                 </div>
-                '
-                    ;
-            }
+                ';
+                    }
 
-            ])
+                ]);
+            };
             ?>
         </div>
     </div>

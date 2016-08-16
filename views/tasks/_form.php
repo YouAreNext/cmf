@@ -198,26 +198,31 @@ use yii\helpers\Url;
     </div>
     <div class="tasks-form tab-pane fade in" id="page3">
         <h3>Файлы</h3>
+
         <?php $form2 = ActiveForm::begin(['action' => '/projects/upload','options' => ['enctype' => 'multipart/form-data']]) ?>
         <?php
-        echo FileInput::widget([
-            'name'=>'file',
-            'language' => 'ru',
-            'options'=>[
-                'multiple'=>true
-            ],
-            'pluginOptions'=>[
-                'previewFileType' => 'any',
-                'uploadUrl' => Url::to('/projects/upload?id='.$model->id.'&parent=1')
-            ]
+        if($model->isNewRecord){}else{
+            echo FileInput::widget([
+                'name'=>'file',
+                'language' => 'ru',
+                'options'=>[
+                    'multiple'=>true
+                ],
+                'pluginOptions'=>[
+                    'previewFileType' => 'any',
+                    'uploadUrl' => Url::to('/projects/upload?id='.$model->id.'&parent=1')
+                ]
 
-        ])
+            ]);
+        }
 
         ?>
         <?php ActiveForm::end()?>
 
         <div class="file-big-container">
             <?php
+            if($model->isNewRecord) {
+            }else{
             echo ListView::widget([
                 'dataProvider' => $dataFile,
                 'itemOptions' => [
@@ -269,7 +274,8 @@ use yii\helpers\Url;
                         ;
                 }
 
-            ])
+            ]);
+            }
             ?>
         </div>
     </div>
