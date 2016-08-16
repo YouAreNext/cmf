@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\swiftmailer;
+use yii\data\ActiveDataProvider;
 
 
 /**
@@ -330,6 +331,19 @@ class TasksController extends BehaviorsController
         $model->Status = 1;
         $model->task_creator=$userId;
 
+
+        //Загрузка файлов
+
+
+        $dataProviderFile = \app\models\Files::find()->andFilterWhere([
+            'parent_id' => $model->id,
+            'parent_type' => 1
+        ]);
+
+        $dataFile = new ActiveDataProvider([
+            'query' => $dataProviderFile,
+        ]);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
             //Отправка почты
@@ -348,7 +362,8 @@ class TasksController extends BehaviorsController
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'userId'=>$userId
+                'userId'=>$userId,
+                'dataFile'=>$dataFile
             ]);
         }
     }
@@ -414,9 +429,25 @@ class TasksController extends BehaviorsController
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
         $userId = Yii::$app->user->identity['id'];
         $userFirstName = \app\models\Profile::find()->where(['user_id'=>$userId])->one()->first_name;
+
+
+
+        //загрузка файлов
+
+        $dataProviderFile = \app\models\Files::find()->andFilterWhere([
+            'parent_id' => $model->id,
+            'parent_type' => 1
+        ]);
+
+        $dataFile = new ActiveDataProvider([
+            'query' => $dataProviderFile,
+        ]);
+
+
         if ($model->load(Yii::$app->request->post())) {
 
             //Если задачу отправляет на проверку создатель она завершается
@@ -442,7 +473,8 @@ class TasksController extends BehaviorsController
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'userId'=>$userId
+                'userId'=>$userId,
+                'dataFile'=>$dataFile
             ]);
         }
     }

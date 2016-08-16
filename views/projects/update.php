@@ -20,7 +20,8 @@ $this->params['breadcrumbs'][] = 'Обзор проекта';
 
     <?= $this->render('_form', [
         'model' => $model,
-
+        'FileModel'=>$FileModel,
+        'dataFile'=>$dataFile
     ]) ?>
 
 </div>

@@ -58,7 +58,7 @@ $(function(){
        })
 
         $.ajax({
-            url: 'update?id='+dataId,
+            url: 'update?id='+dataId+'&check=1',
             type: "POST",
             data: checkJson,
             dataType: 'json',

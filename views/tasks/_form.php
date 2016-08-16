@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
 use app\models\Projects;
 use kartik\select2\Select2;
 use dosamigos\datepicker\DatePicker;
+use kartik\file\FileInput;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tasks */
 /* @var $form yii\widgets\ActiveForm */
@@ -195,6 +197,80 @@ use dosamigos\datepicker\DatePicker;
 
     </div>
     <div class="tasks-form tab-pane fade in" id="page3">
+        <h3>Файлы</h3>
+        <?php $form2 = ActiveForm::begin(['action' => '/projects/upload','options' => ['enctype' => 'multipart/form-data']]) ?>
+        <?php
+        echo FileInput::widget([
+            'name'=>'file',
+            'language' => 'ru',
+            'options'=>[
+                'multiple'=>true
+            ],
+            'pluginOptions'=>[
+                'previewFileType' => 'any',
+                'uploadUrl' => Url::to('/projects/upload?id='.$model->id.'&parent=1')
+            ]
 
+        ])
+
+        ?>
+        <?php ActiveForm::end()?>
+
+        <div class="file-big-container">
+            <?php
+            echo ListView::widget([
+                'dataProvider' => $dataFile,
+                'itemOptions' => [
+                    'tag' => 'div',
+                    'class' => 'col-md-3 file-item',
+                ],
+                'itemView' => function($dataFile){
+                    $file_ext = '';
+                    switch($dataFile->extension){
+                        case 'jpg':
+                            $file_ext = 'jpg-file';
+                            break;
+                        case 'png':
+                            $file_ext = 'jpg-file';
+                            break;
+                        case 'docx':
+                            $file_ext = 'doc-file non-image';
+                            break;
+                        case 'doc':
+                            $file_ext = 'doc-file non-image';
+                            break;
+                        case 'xls':
+                            $file_ext = 'xls-file non-image';
+                            break;
+                        case 'xlsx':
+                            $file_ext = 'xls-file non-image';
+                            break;
+                        case 'rar':
+                            $file_ext = 'rar-file non-image';
+                            break;
+                        case 'pdf':
+                            $file_ext = 'pdf-file non-image';
+                            break;
+                        default:
+                            $file_ext = 'all-files non-image';
+
+                    }
+                    return '
+                <div class="file-item-block">
+                    <div class="file-item-preview '.$file_ext.'">
+                        <img src="../'.$dataFile->url.'" alt="">
+                    </div>
+                    <div class="file-item-title">
+                    '.$dataFile->file_name.'
+                    </div>
+                    <a href="../'.$dataFile->url.'" download class="file-link">Скачать</a>
+                </div>
+                '
+                        ;
+                }
+
+            ])
+            ?>
+        </div>
     </div>
 </div>

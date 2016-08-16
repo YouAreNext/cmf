@@ -387,7 +387,7 @@ textarea{
 }
 
 .modal-backdrop{
-    z-index: 20;
+    z-index: 10;
 }
 
 .popup-side{
@@ -761,4 +761,78 @@ a:hover{
 }
 .sub-status3{
     background-image: url(../assets/images/icons/task-view.png);
+}
+
+.file-item{
+    display: inline-block;
+    width: 200px;
+    height: 300px;
+    overflow: hidden;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-right: 14px;
+    border: 2px solid #3E3E3E;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.file-link{
+    width: 90%;
+    position: absolute;
+    bottom: 10px;
+    height: 30px;
+    left: 5%;
+    line-height: 30px;
+    font-size: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    background: #337ab7;
+    color: #FFF;
+    border-radius: 5px;
+
+}
+.file-link:hover{
+    color:#FFF;
+    background: #286090;
+}
+.file-item:nth-child(5n+1){
+    margin-right: 0;
+}
+.file-item-preview{
+    overflow: hidden;
+    height: 150px;
+    line-height: 150px;
+}
+.file-item img{
+    width: 100%;
+    vertical-align: middle;
+}
+
+.file-item-preview.non-image img{
+    display: none;
+}
+
+.file-item-preview.xls-file{
+    background: url(../assets/images/icons/xls.png) no-repeat center;
+}
+
+.file-item-preview.pdf-file{
+    background: url(../assets/images/icons/pdf.png) no-repeat center;
+}
+.file-item-preview.psd-file{
+    background: url(../assets/images/icons/psd.png) no-repeat center;
+}
+
+.file-item-preview.rar-file{
+    background: url(../assets/images/icons/zip.png) no-repeat center;
+}
+
+.file-item-preview.txt-file{
+    background: url(../assets/images/icons/txt.png) no-repeat center;
+}
+.file-item-preview.doc-file{
+    background: url(../assets/images/icons/doc.png) no-repeat center;
+}
+
+.file-item-preview.all-file{
+    background: url(../assets/images/icons/file.png) no-repeat center;
 }

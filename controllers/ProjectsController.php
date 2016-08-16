@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Files;
 use Yii;
 use app\models\Projects;
 use app\models\ProjectsSearch;
@@ -9,7 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
-
+use yii\data\ActiveDataProvider;
 /**
  * ProjectsController implements the CRUD actions for Projects model.
  */
@@ -57,13 +58,74 @@ class ProjectsController extends BehaviorsController
     {
         $model = new Projects();
 
+        $dataProviderFile = \app\models\Files::find()->andFilterWhere([
+            'parent_id' => $model->id,
+            'parent_type' => 0
+        ]);
+
+        $dataFile = new ActiveDataProvider([
+            'query' => $dataProviderFile,
+        ]);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['/projects']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'dataFile'=>$dataFile
             ]);
         }
+    }
+
+
+    public function actionUpload(){
+        $model = new Files();
+
+
+
+
+
+
+        if (Yii::$app->request->isPost) {
+            $parentID = Yii::$app->request->get('id');
+            $parentType = Yii::$app->request->get('parent');
+            $file = UploadedFile::getInstanceByName('file');
+
+
+
+
+            //Заполняю табличку
+            $model->parent_type = $parentType;
+            $model->parent_id = $parentID;
+            $model->file_name = $file->name;
+
+            $model->extension = $file->getExtension();
+
+            //Загружаю файл на сервер
+            if($model->parent_type == 0){
+                $directory = 'web/uploads/'.'projects/'.$model->parent_id.'/';
+            } else if($model->parent_type == 1){
+                $directory = 'web/uploads/'.'tasks/'.$model->parent_id.'/';
+            }
+
+            $model->url = $directory.$file->name;
+
+            //Если нет папки, создаем
+            if (!is_dir($directory)) {
+                mkdir($directory);
+            }
+
+            //Сохраняем файл по пути
+            $file->saveAs($directory.$file->name);
+
+            if($model->save()){
+                return '{}';
+            }
+            else{
+                return 'gg';
+            }
+        }
+
     }
 
     /**
@@ -75,11 +137,23 @@ class ProjectsController extends BehaviorsController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $fileModel = new Files();
+
+
+        $dataProviderFile = \app\models\Files::find()->andFilterWhere([
+            'parent_id' => $model->id,
+            'parent_type' => 0
+        ]);
+
+        $dataFile = new ActiveDataProvider([
+            'query' => $dataProviderFile,
+        ]);
+
 
 
         if(Yii::$app->request->isAjax){
             $getChecklist = Yii::$app->request->get('checklist');
-
+            $getCheck = Yii::$app->request->get('check');
             if($getChecklist == 1) {
                  if (Yii::$app->request->get()) {
                     $checklist = $model->checklist;
@@ -87,19 +161,24 @@ class ProjectsController extends BehaviorsController
                 }
 //            return json_encode(Yii::$app->request->post());
             }
-            if (Yii::$app->request->post()) {
-                $checklist = json_encode(Yii::$app->request->post());
-                $model->checklist = $checklist;
-                $model->save();
-                Yii::$app->response->format = 'json';
-                return $checklist;
+            if($getCheck == 1){
+                if (Yii::$app->request->post()) {
+                    $checklist = json_encode(Yii::$app->request->post());
+                    $model->checklist = $checklist;
+                    $model->save();
+                    Yii::$app->response->format = 'json';
+                    return $checklist;
+                }
             }
         }
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['/projects']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'FileModel' =>$fileModel,
+                'dataFile' =>$dataFile
             ]);
         }
     }
