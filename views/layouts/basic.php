@@ -19,6 +19,11 @@ $MyTaskCheck= \app\models\Tasks::find()->where([
     'task_creator' => Yii::$app->user->identity['id']
 ])
     ->count();
+$MyTaskSlave= \app\models\Tasks::find()->where([
+    'Status' => 1,
+    'task_creator' => Yii::$app->user->identity['id']
+])
+    ->count();
 
 ?>
 <!-- @var $content string -->
@@ -48,6 +53,10 @@ $MyTaskCheck= \app\models\Tasks::find()->where([
             <a href="/tasks/checking" class="side-panel-item side-panel-oncheck">
                 <span class="task-count"><?=$MyTaskCheck?></span>
                 Задачи на проверке
+            </a>
+            <a href="/tasks/slave" class="side-panel-item side-panel-slave">
+                <span class="task-count"><?=$MyTaskSlave?></span>
+                Мои рабы
             </a>
             <a href="/tasks/calendar" class="side-panel-item side-panel-calendar">Все задачи</a>
             <a href="/tasks/complete" class="side-panel-item side-panel-complete">Выполненные задачи</a>

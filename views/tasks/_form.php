@@ -25,7 +25,6 @@ if($model->isNewRecord){}else {
 
     $subCount = Tasks::find()->where([
         'prev_task'=>$model->id,
-
     ])->count();
 }
 
@@ -113,7 +112,11 @@ if($model->isNewRecord){}else {
                 <?= $form->field($model, 'description')->textarea() ?>
 
                 <div class="col-md-6 wpad wpad-first">
-                    <?= $form->field($model, 'created_at')->textInput(['readonly' => true]) ?>
+                    <?= $form->field($model, 'task_priority')->dropDownList([
+                        '1' => 'Изи',
+                        '2' => 'Обычный',
+                        '3' => 'Критический',
+                    ]);?>
                 </div>
                 <div class="col-md-6 wpad">
                     <?= $form->field($model, 'finish_date')->widget(

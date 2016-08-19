@@ -62,12 +62,19 @@ $workers = User::find()->all();
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
-                'pjax'=>true,
+                'rowOptions' => function($model){
+                    switch($model->task_priority){
+                        case 1:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 2:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 3:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                    }
+                },
                 'columns' => [
 
                     'title',
-
-
 
                     [
                         'attribute'=>'worker',
@@ -129,7 +136,15 @@ $workers = User::find()->all();
                         'width'=>'200px'
                     ],
 
-                    ['class' => 'kartik\grid\ActionColumn'],
+                    [
+                        'label' =>'',
+                        'value' => function ($model)
+                        {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['update', 'id' => $model->id],$options = ['class'=>'link-to-task']);
+
+                        },
+                        'format'=>'raw',
+                    ],
                 ],
             ]); ?>
 
@@ -139,7 +154,16 @@ $workers = User::find()->all();
                 'dataProvider' => $dataProvider2,
                 'filterModel' => $searchModel2,
                 'responsive'=>true,
-
+                'rowOptions' => function($model){
+                    switch($model->task_priority){
+                        case 1:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 2:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 3:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                    }
+                },
                 'columns' => [
 
                     'title',
@@ -176,7 +200,15 @@ $workers = User::find()->all();
                         'value'=>'project.Title',
                     ],
 
-                    ['class' => 'kartik\grid\ActionColumn'],
+                    [
+                        'label' =>'',
+                        'value' => function ($model)
+                        {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['update', 'id' => $model->id],$options = ['class'=>'link-to-task']);
+
+                        },
+                        'format'=>'raw',
+                    ],
                 ],
             ]); ?>
         </div>

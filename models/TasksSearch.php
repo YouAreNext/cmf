@@ -58,7 +58,7 @@ class TasksSearch extends Tasks
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-
+            'sort' => ['defaultOrder'=> ['task_priority'=>SORT_DESC]]
         ]);
 
 

@@ -90,6 +90,36 @@ class TasksController extends BehaviorsController
             'events' => $tasks,
         ]);
     }
+    public function actionSlave()
+    {
+        $userId = Yii::$app->user->identity['id'];
+        if(Yii::$app->request->isAjax){
+            debug(Yii::$app->request->post());
+            return 'test';
+        }
+        $events = Tasks::find()->where([
+            'periodic' => 0,
+            'task_creator' => $userId
+        ])->all();
+        $tasks = [];
+        foreach ($events as $eve) {
+            if ($eve->Status == 1){
+                $TaskClass = '';
+            } elseif($eve->Status == 2){
+                $TaskClass = 'task-finished';
+            }
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $eve->id;
+            $event->className = $TaskClass;
+            $event->url = 'update?id='.$eve->id;
+            $event->title = $eve->title;
+            $event->start = date($eve->finish_date);
+            $tasks[] = $event;
+        }
+        return $this->render('slave', [
+            'events' => $tasks,
+        ]);
+    }
 
     public function actionChecking()
     {
@@ -188,6 +218,9 @@ class TasksController extends BehaviorsController
             'periodic' => '0'
         ]);
 
+
+
+
         $searchModel2 = new TasksSearch();
         $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
         $dataProvider2->query->andFilterWhere([
@@ -254,10 +287,6 @@ class TasksController extends BehaviorsController
     }
 
     public function actionPeriodic(){
-
-
-
-
         $dataProvider = Tasks::find()->andFilterWhere([
             'periodic' => 1
         ]);

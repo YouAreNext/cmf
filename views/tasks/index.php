@@ -39,7 +39,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
 
-
+                'rowOptions' => function($model){
+                    switch($model->task_priority){
+                        case 1:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 2:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 3:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                    }
+                },
                 'columns' => [
 
 
@@ -104,7 +113,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     // 'task_complete',
                     // 'project_id',
 
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'label' =>'Перейти',
+                        'value' => function ($model)
+                        {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['update', 'id' => $model->id],$options = ['class'=>'link-to-task']);
+
+                        },
+                        'format'=>'raw',
+                    ],
                 ],
             ]); ?>
         </div>
@@ -112,7 +129,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider2,
                 'filterModel' => $searchModel2,
-
+                'rowOptions' => function($model){
+                    switch($model->task_priority){
+                        case 1:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 2:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                        case 3:
+                            return ['class'=>'task-priority'.$model->task_priority];
+                    }
+                },
                 'columns' => [
 
 
