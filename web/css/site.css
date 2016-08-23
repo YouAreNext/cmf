@@ -310,7 +310,7 @@ textarea{
     width: 60px;
     position: fixed;
     top:0px;
-    z-index: 15;
+    z-index: 10;
     bottom:0px;
     left:0px;
     background: #3E3E3E;
