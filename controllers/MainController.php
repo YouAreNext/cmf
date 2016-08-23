@@ -76,7 +76,9 @@ class MainController extends BehaviorsController{
 
             $imageName = User::find()->where(['id'=>$model->user_id])->one()->username;
             $model->avatar = UploadedFile::getInstance($model, 'avatar');
-            $this->avatar->saveAs('web/uploads/avatars/'.$imageName.'-avatar.'.$model->avatar->extension);
+            $model->avatar->saveAs('web/uploads/avatars/'.$imageName.'-avatar.'.$model->avatar->extension);
+
+            $model->ava_url = 'web/uploads/avatars/'.$imageName.'-avatar.'.$model->avatar->extension;
 
             if($model->updateProfile()):
                 Yii::$app->session->setFlash('succes','Профиль изменен');
