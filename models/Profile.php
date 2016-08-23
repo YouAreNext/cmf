@@ -44,7 +44,7 @@ class Profile extends \yii\db\ActiveRecord
             [['email','ava_url'], 'string', 'max' => 255],
             [['first_name', 'second_name', 'middle_name'], 'string', 'max' => 32],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
-            [['avatar'],'file','skipOnEmpty'=>true,'extensions'=>'png,jpg']
+            [['avatar'],'file','skipOnEmpty'=>true,'extensions'=>'png,gif,jpg']
         ];
     }
 

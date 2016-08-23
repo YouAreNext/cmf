@@ -23,6 +23,7 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
     'Status' => 1,
     'task_creator' => Yii::$app->user->identity['id']
 ])
+    ->andWhere(['!=','worker',Yii::$app->user->identity['id']])
     ->count();
 
 ?>

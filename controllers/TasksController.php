@@ -98,10 +98,14 @@ class TasksController extends BehaviorsController
             debug(Yii::$app->request->post());
             return 'test';
         }
-        $events = Tasks::find()->where([
-            'periodic' => 0,
-            'task_creator' => $userId
-        ])->all();
+        $events = Tasks::find()->where(
+            [
+                'periodic' => 0,
+                'task_creator'=>$userId
+            ]
+        )
+            ->andWhere(['!=','worker',$userId])
+            ->all();
         $tasks = [];
         foreach ($events as $eve) {
             if ($eve->Status == 1){

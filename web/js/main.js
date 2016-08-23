@@ -146,23 +146,28 @@ $(document).ready(function(){
     $('body').on('mouseenter','.fc-day-grid-event', function () {
         var taskId = parseInt(($(this).attr("href")).split("?")[1].split("=")[1]);
         console.log(taskId);
-        $.ajax({
-            url: 'popup?id='+taskId,
-            data: taskId,
-            type:'GET',
-            success:function(res){
-                console.log(res);
-                $(".popup-task-for").html(res);
-                $(".popup-task-for").addClass("popup-task-in");
-            },
-            error:function(){
-                console.log('Error!');
-            }
-        })
+        var pew = setTimeout(function(){
+            $.ajax({
+                url: 'popup?id='+taskId,
+                data: taskId,
+                type:'GET',
+                success:function(res){
+                    console.log(res);
+                    $(".popup-task-for").html(res);
+                    $(".popup-task-for").addClass("popup-task-in");
+                },
+                error:function(){
+                    console.log('Error!');
+                }
+            })
+        },3000);
+
     }).on('mouseout','.fc-day-grid-event', function () {
         $(".popup-task-for").removeClass("popup-task-in");
         $('.popup-task-for').html("");
         console.log("pew");
+        clearInterval(pew);
+        pew = 0;
     });
 
 
