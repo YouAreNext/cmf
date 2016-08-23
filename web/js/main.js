@@ -160,7 +160,7 @@ $(document).ready(function(){
                     console.log('Error!');
                 }
             })
-        },3000);
+        },1600);
 
     }).on('mouseout','.fc-day-grid-event', function () {
         $(".popup-task-for").removeClass("popup-task-in");
