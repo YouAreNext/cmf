@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Projects;
 use Yii;
 use app\models\Tasks;
 use app\models\TasksSearch;
@@ -170,7 +171,9 @@ class TasksController extends BehaviorsController
                 $TaskClass = '';
             } elseif($eve->Status == 2){
                 $TaskClass = 'task-finished';
-            }
+            }elseif($eve->Status == 3){
+                $TaskClass = 'task-checking-calend';
+            };
             $event = new \yii2fullcalendar\models\Event();
             $event->id = $eve->id;
             $event->className = $TaskClass;
@@ -178,6 +181,7 @@ class TasksController extends BehaviorsController
             $event->title = $eve->title;
             $event->start = date($eve->finish_date);
             $tasks[] = $event;
+
         }
         return $this->render('calendar', [
             'events' => $tasks,
@@ -268,6 +272,30 @@ class TasksController extends BehaviorsController
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionPopup($id){
+
+        $model = $this->findModel($id);
+
+        $TaskWorker = $model->worker;
+
+        $TaskWorkerName = \app\models\Profile::find()->where(['user_id'=>$TaskWorker])->one()->first_name;
+
+        $TaskWorkerImg = \app\models\Profile::find()->where(['user_id'=>$TaskWorker])->one()->ava_url;
+
+        $TaskProject = Projects::find()->where(['id'=>$model->project_id])->one()->Title;
+
+        if ($model->load(Yii::$app->request->get())) {
+            return 'qq';
+        } else {
+            return $this->renderAjax('popup', [
+                'model' => $model,
+                'TaskWorkerName' => $TaskWorkerName,
+                'TaskWorkerImg' => $TaskWorkerImg,
+                'TaskProject' => $TaskProject,
+            ]);
+        }
     }
 
     public function actionPeriod($id)

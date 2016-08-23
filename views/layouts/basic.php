@@ -156,7 +156,6 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
             <?= $content ?>
         </div>
     </div>
-
     <footer class="footer">
         <div class="container">
             <span class="badge">
@@ -167,6 +166,11 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
         </div>
     </footer>
 <?php $this->endBody(); ?>
+
+
+<div class="popup-task-for">
+
+</div>
 </body>
 
 </html>

@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!--        <?//= Html::a('Добавить задачу', ['create'], ['class' => 'btn btn-success right-button ']) ?>-->
     </p>
     <?= \yii2fullcalendar\yii2fullcalendar::widget(array(
+
         'events'=> $events,
         'options' => [
             'lang' => 'ru',

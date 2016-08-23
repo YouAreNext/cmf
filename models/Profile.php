@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Url;
+use yii\helpers\StringHelper;
 
 /**
  * This is the model class for table "profile".
@@ -22,6 +24,10 @@ class Profile extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+    public $avatar;
+
+
     public static function tableName()
     {
         return 'profile';
@@ -30,19 +36,26 @@ class Profile extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
     public function rules()
     {
         return [
             [['birthday', 'gender'], 'integer'],
-            [['avatar','email'], 'string', 'max' => 255],
+            [['email','ava_url'], 'string', 'max' => 255],
             [['first_name', 'second_name', 'middle_name'], 'string', 'max' => 32],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['avatar'],'file','skipOnEmpty'=>true,'extensions'=>'png,jpg']
         ];
     }
 
     /**
      * @inheritdoc
+     *
+     *
+     *
      */
+
+
     public function attributeLabels()
     {
         return [
@@ -71,6 +84,7 @@ class Profile extends \yii\db\ActiveRecord
         $profile->email = $this->email;
         $profile->second_name = $this->second_name;
         $profile->middle_name = $this->middle_name;
+        $profile->ava_url = $this->ava_url;
         return $profile->save() ? true : false;
     }
 }

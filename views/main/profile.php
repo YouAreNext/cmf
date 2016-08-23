@@ -11,10 +11,11 @@ use app\models\User;
 
 
 <div class="main-profile">
-
-    <?php $form = ActiveForm::begin(); ?>
-
-
+    <img class="profile-ava" src="/<?=$model->ava_url?>" alt="">
+    <?php $form = ActiveForm::begin
+    (['options'=>['enctype'=>'multipart/form-data']]);
+    ; ?>
+        <?= $form->field($model, 'avatar')->fileInput()?>
         <?= $form->field($model, 'first_name') ?>
         <?= $form->field($model, 'second_name') ?>
         <?= $form->field($model, 'middle_name') ?>

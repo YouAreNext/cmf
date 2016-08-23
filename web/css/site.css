@@ -310,6 +310,7 @@ textarea{
     width: 60px;
     position: fixed;
     top:0px;
+    z-index: 15;
     bottom:0px;
     left:0px;
     background: #3E3E3E;
@@ -881,4 +882,93 @@ a:hover{
 }
 .kv-merged-header{
     border-bottom:none !important;
+}
+
+.task-checking-calend{
+    background: #e8c130;
+    border:1px solid #e8c130;
+}
+
+.task-checking-calend:hover{
+    background: #fbc736;
+    border:1px solid #fbc736;
+}
+
+
+.profile-ava{
+    width: 250px;
+}
+
+.popup-task-for{
+    opacity: 0;
+    position: fixed;
+    right: -20px;
+    z-index: 50;
+    width: 250px;
+    padding-left: 10px;
+    height: 80px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    bottom: 60px;
+    background: #3E3E3E;
+    border-radius: 5px;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+.popup-task-in{
+    opacity: 1;
+    right: 30px;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+.popup-task-img{
+    width: 20%;
+    height: 40px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+.popup-task-img img{
+    width: 100%;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+.popup-task-info{
+    color:#FFF;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+.popup-task-worker{
+    font-size: 18px;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+.popup-task-project{
+    font-size: 16px;
+    font-weight: bold;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
 }

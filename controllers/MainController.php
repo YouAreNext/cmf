@@ -10,11 +10,14 @@ use app\models\User;
 use app\models\Profile;
 use app\models\ProjectList;
 use app\models\Tasks;
+use yii\web\UploadedFile;
+use yii\imagine\Image;
 
 
 class MainController extends BehaviorsController{
     public $layout = 'basic';
     public $defaultAction = 'index';
+
 
 
     public function actionPew()
@@ -68,9 +71,19 @@ class MainController extends BehaviorsController{
     }
     public function actionProfile(){
         $model = ($model = Profile::findOne(Yii::$app->user->id)) ? $model : new Profile();
+
         if($model->load(Yii::$app->request->post()) && $model->validate()):
+
+            $imageName = User::find()->where(['id'=>$model->user_id])->one()->username;
+            $model->avatar = UploadedFile::getInstance($model, 'avatar');
+
+            Image::frame($model->avatar->tempName)
+                ->save('web/uploads/avatars/'.$imageName.'-avatar.'.$model->avatar->extension,['quality'=>90]);
+            $model->ava_url = 'web/uploads/avatars/'.$imageName.'-avatar.'.$model->avatar->extension;
+
             if($model->updateProfile()):
                 Yii::$app->session->setFlash('succes','Профиль изменен');
+
             else:
                 Yii::$app->session->setFlash('error','Профиль не изменен');
                 Yii::error('Ошибка записи. Профиль не изменен');
