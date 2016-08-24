@@ -74,10 +74,17 @@ $this->params['breadcrumbs'][] = $this->title;
     echo ListView::widget([
     'dataProvider' => $dataProvider,
     'itemView' => function($dataProvider){
+        if(\app\models\Profile::find()->where(['user_id'=>$dataProvider->worker])->exists()){
+            $avaUrl = \app\models\Profile::find()->where(['user_id'=>$dataProvider->worker])->one()->ava_url;
+        } else{
+            $avaUrl = 'web/uploads/avatars/crm-user.png';
+        }
     return '
     <div class="report-img col-md-3">
         <img src="/'.
-        \app\models\Profile::find()->where(['user_id'=>$dataProvider->worker])->one()->ava_url.'
+        $avaUrl
+        .
+        '
         " alt="">
     </div>
     <div class="report-info-block col-md-9">

@@ -70,7 +70,6 @@ class TasksController extends BehaviorsController
 
         $dataProvider->query->andFilterWhere([
             'Status' => '2',
-            'worker' => $userId,
             'periodic' => 0
         ]);
 

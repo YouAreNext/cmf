@@ -975,11 +975,16 @@ a:hover{
 .report-img{
     width: 25%;
     background: #FFF;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
     border-radius: 5px;
     box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.1);
 }
 .report-img img{
-    width: 100%;
+    max-width: 200px;
+    min-width: 100px;
+    vertical-align: middle;
 }
 
 .report-item-title{
