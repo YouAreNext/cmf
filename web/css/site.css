@@ -972,3 +972,47 @@ a:hover{
     -o-transition: .3s ;
     transition: .3s ;
 }
+.report-img{
+    width: 25%;
+    background: #FFF;
+    border-radius: 5px;
+    box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.1);
+}
+.report-img img{
+    width: 100%;
+}
+
+.report-item-title{
+    display: block;
+    font-size:24px;
+    margin-bottom: 20px;
+    color:#3E3E3E;
+}
+.report-desc{
+    margin-bottom: 20px;
+}
+.report-item-date{
+    position: absolute;
+    right:0px;
+    bottom: 0px;
+}
+.report-item-date .glyphicon-calendar{
+    position: absolute;
+    left:-20px;
+    top:50%;
+    margin-top: -7px;
+}
+.report-item{
+    margin-bottom: 30px;
+}
+.report-info-block{
+    padding-bottom: 30px;
+}
+
+.report-calend{
+    margin-top: 25px;
+}
+
+.report-btn{
+    margin-top: 20px;
+}

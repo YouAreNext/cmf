@@ -61,7 +61,24 @@ class TasksController extends BehaviorsController
         ]);
 
     }
+    //Отчеты
+    public function actionReport(){
 
+        $userId = Yii::$app->user->identity['id'];
+        $searchModel = new TasksSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->query->andFilterWhere([
+            'Status' => '2',
+            'worker' => $userId,
+            'periodic' => 0
+        ]);
+
+        return $this->render('report', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
+        ]);
+    }
 //Все задачи
     public function actionCalendar()
     {

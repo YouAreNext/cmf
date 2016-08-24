@@ -63,7 +63,8 @@ class Tasks extends \yii\db\ActiveRecord
             'task_complete' => 'Задача завершена',
             'project_id' => 'Проект',
             'task_priority'=>'Приоритет',
-            'projectName' => 'Project Name'
+            'projectName' => 'Project Name',
+            'finish_date' => 'Дата окончания'
         ];
     }
 

@@ -83,7 +83,10 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
             
             else:
             $menuItems = [
-
+                [
+                    'label' => 'Отчеты',
+                    'url' => ['/tasks/report']
+                ],
                 [
                     'label' => 'SEO проекты',
                     'url' => ['/projects']

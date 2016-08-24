@@ -24,7 +24,6 @@ class TasksSearch extends Tasks
             [['id', 'Status', 'created_at', 'task_complete', 'worker'], 'integer'],
             [['title', 'description', 'project_id'], 'safe'],
             [['project'],'safe'],
-
             [['finish_date'],'date','format'=>'yyyy-mm-dd']
         ];
     }
@@ -50,9 +49,6 @@ class TasksSearch extends Tasks
         $userId = Yii::$app->user->identity['id'];
 
         $query = Tasks::find();
-
-
-
 
         // add conditions that should always apply here
 
