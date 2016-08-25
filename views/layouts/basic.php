@@ -144,7 +144,10 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
 
             Modal::begin([
                 'header' => '<h2>Клац!</h2>',
-                'id' => 'modal'
+                'id' => 'modal',
+                'options' => [
+                    'tabindex' => false
+                ]
             ]);
             Modal::end();
             NavBar::end();
