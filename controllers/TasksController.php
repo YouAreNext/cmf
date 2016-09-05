@@ -87,14 +87,12 @@ class TasksController extends BehaviorsController
         $searchModel = new TasksSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere([
-
+            'Status'=>1,
+            'periodic' => 0,
         ]);
 
         $pew = $dataProvider->getModels();
-        $events = Tasks::find()->where([
-            'Status'=>1,
-            'periodic' => 0,
-        ])->all();
+
 
         $tasks = [];
 
@@ -569,14 +567,14 @@ class TasksController extends BehaviorsController
 
 
         if ($model->load(Yii::$app->request->post())) {
-            echo date('Y-m-d H:m:s');
+
             //Если задачу отправляет на проверку создатель она завершается
             if($model->Status == 3){
                 $model->task_complete = date('Y-m-d H:i:s');
             }
             if(($model->Status == 3)&&($model->task_creator == $model->worker)){
                 $model->Status=2;
-                $model->task_complete = date('Y-m-d H:i:s');
+
             }
 
             //Отправка E-mail по завершению
