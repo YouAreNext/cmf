@@ -127,7 +127,9 @@ $this->params['breadcrumbs'][] = $this->title;
     echo ListView::widget([
     'dataProvider' => $dataProvider,
     'itemView' => function($dataProvider){
-
+        $date = new DateTime();
+        $date->setTimestamp($dataProvider->task_complete);
+        $report_date = $date->format('Y-m-d H:i:s') . "\n";
 
 
         //Урл аватарки
@@ -170,7 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 '.$CreatorName.' '.$CreatorLastName.'
             </div>
             <div class="report-finish-date">
-                '.$dataProvider->task_complete.'
+                '.$report_date.'
             </div>
 
         </div>

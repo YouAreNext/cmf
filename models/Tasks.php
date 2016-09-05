@@ -40,7 +40,7 @@ class Tasks extends \yii\db\ActiveRecord
             [[ 'Status', 'worker', 'project_id','prev_task','periodic','task_creator','task_priority'], 'integer'],
             [['description','worker_comment'], 'string'],
             [['created_at', 'finish_date'],'date','format'=>'yyyy-mm-dd'],
-            [['task_complete'],'date','format'=>'yyyy-MM-dd HH:i:ss'],
+            [['task_complete'],'integer'],
             [['title'], 'string', 'max' => 255],
 
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projects::className(), 'targetAttribute' => ['project_id' => 'id']],

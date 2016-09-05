@@ -76,6 +76,8 @@ class TasksSearch extends Tasks
             $query->andFilterWhere(['between', 'finish_date', $start_date, $end_date]);
             $this->finish_date = null;
         }
+
+
         if ( ! is_null($this->task_complete) && strpos($this->task_complete, 'to') !== false ) {
             list($start_date, $end_date) = explode('to', $this->task_complete);
             $query->andFilterWhere(['between', 'finish_date', $start_date, $end_date]);

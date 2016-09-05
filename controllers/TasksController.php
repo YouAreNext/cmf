@@ -572,11 +572,11 @@ class TasksController extends BehaviorsController
             echo date('Y-m-d H:m:s');
             //Если задачу отправляет на проверку создатель она завершается
             if($model->Status == 3){
-                $model->task_complete = date('Y-m-d H:i:s');
+                $model->task_complete = time();
             }
             if(($model->Status == 3)&&($model->task_creator == $model->worker)){
                 $model->Status=2;
-                $model->task_complete = date('Y-m-d H:i:s');
+                $model->task_complete = time();
             }
 
             //Отправка E-mail по завершению
