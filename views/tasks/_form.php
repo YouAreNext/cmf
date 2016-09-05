@@ -53,6 +53,7 @@ if($model->isNewRecord){}else {
 <div class="tab-content tab-content-projects clearfix">
 <div class="tasks-form tab-pane fade in active" id="page1">
     <?=date('Y-m-d H:i:s')?>
+    <?=date('Y-m-d H:i:s')?>
     <?php $form = ActiveForm::begin(); ?>
 
         <div class="row">

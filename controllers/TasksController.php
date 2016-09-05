@@ -92,7 +92,9 @@ class TasksController extends BehaviorsController
         ]);
 
         $pew = $dataProvider->getModels();
+        $events = Tasks::find()->where([
 
+        ])->all();
 
         $tasks = [];
 
@@ -567,14 +569,14 @@ class TasksController extends BehaviorsController
 
 
         if ($model->load(Yii::$app->request->post())) {
-
+            echo date('Y-m-d H:m:s');
             //Если задачу отправляет на проверку создатель она завершается
             if($model->Status == 3){
                 $model->task_complete = date('Y-m-d H:i:s');
             }
             if(($model->Status == 3)&&($model->task_creator == $model->worker)){
                 $model->Status=2;
-
+                $model->task_complete = date('Y-m-d H:i:s');
             }
 
             //Отправка E-mail по завершению
