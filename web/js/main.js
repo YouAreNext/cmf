@@ -165,16 +165,28 @@ $(document).ready(function(){
     }).on('mouseout','.fc-day-grid-event', function () {
         $(".popup-task-for").removeClass("popup-task-in");
         $('.popup-task-for').html("");
-        console.log("pew");
         clearInterval(pew);
         pew = 0;
     });
-
-
     ;
+    //AJAX фильтрация календаря
+    var CalendarUser = $(".calendar-user-select select");
+    CalendarUser.on("change", function (e){
+        var CalendarUserData = CalendarUser.val();
+        console.log(CalendarUserData);
 
-
-
+        $.ajax({
+            url: 'calendarajax?filtr=1',
+            type:'GET',
+            data:{userFilter:CalendarUserData},
+            success:function(res){
+                $(".calendar-wrap").html(res);
+            },
+            error:function(){
+                alert('Error!');
+            }
+        })
+    });
 });
 
 $('body').on('mouseenter','.fc-day-grid-event', function () {
@@ -183,5 +195,7 @@ $('body').on('mouseenter','.fc-day-grid-event', function () {
     console.log("hi");
 
 })
+
+
 
 

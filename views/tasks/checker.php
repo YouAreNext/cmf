@@ -109,7 +109,15 @@ $workers = User::find()->all();
                         'width'=>'200px'
                     ],
 
-                    ['class' => 'kartik\grid\ActionColumn'],
+                    [
+                        'label' =>'Перейти',
+                        'value' => function ($model)
+                        {
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['update', 'id' => $model->id],$options = ['class'=>'link-to-task']);
+
+                        },
+                        'format'=>'raw',
+                    ],
                 ],
             ]); ?>
 

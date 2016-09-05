@@ -10,7 +10,6 @@ use app\models\Profile;
 
 $this->title = 'Обзор задачи: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Задачи', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Обзор задачи';
 
 

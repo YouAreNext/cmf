@@ -998,10 +998,18 @@ a:hover{
     margin-bottom: 20px;
 }
 .report-item-date{
-    position: absolute;
-    right:0px;
-    bottom: 0px;
+    float:right;
+    position: relative;
+    margin-bottom: 10px;
 }
+.report-item-date .glyphicon-calendar:before{
+    color:#19b899;
+}
+.report-deathline .glyphicon-calendar:before{
+    color:#FC3952;
+
+}
+
 .report-item-date .glyphicon-calendar{
     position: absolute;
     left:-20px;
@@ -1021,4 +1029,86 @@ a:hover{
 
 .report-btn{
     margin-top: 20px;
+}
+
+.nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{
+    background: #348da7;
+    color:#FFF;
+    -webkit-transition: .3s;
+    -moz-transition: .3s ;
+    -ms-transition: .3s ;
+    -o-transition: .3s ;
+    transition: .3s ;
+}
+
+.report-panel-for{
+    width: 100%;
+    height: 35px;
+    line-height: 30px;
+    background: #FFF;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.1);
+}
+.report-worker{
+    padding-left: 40px;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 20px;
+    display: inline-block;
+    color:#3E3E3E;
+    font-weight: bold;
+    position: relative;
+}
+.report-worker:after{
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top:0px;
+    left:0px;
+    content: "";
+    background: url(/web/assets/images/icons/report-worker.png) no-repeat center;
+}
+.report-creator:after{
+    background: url(/web/assets/images/icons/report-creator.png) no-repeat center;
+}
+
+.report-finish-date{
+    float: right;
+    height: 35px;
+    line-height: 35px;
+    position: relative;
+}
+.report-finish-date:after{
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    left:-45px;
+    -webkit-background-size:contain;
+    background-size:contain;
+    top:0px;
+    background: url(/web/assets/images/icons/calendar-report.png) no-repeat center;
+}
+
+.date-report-form:after{
+    content:"\e109";
+    position: absolute;
+    right: 25px;
+    top:50%;
+    width: 20px;
+    color:#556080;
+    height: 20px;
+    font-size: 20px;
+    margin-top: -10px;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
 }

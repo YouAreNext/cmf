@@ -64,7 +64,7 @@ class ContractorsController extends Controller
     public function actionCreate()
     {
         $model = new Contractors();
-
+        $model->author = 19;
         $model->created_at=date('Y-m-d');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
 

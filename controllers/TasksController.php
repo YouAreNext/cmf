@@ -66,12 +66,14 @@ class TasksController extends BehaviorsController
 
         $userId = Yii::$app->user->identity['id'];
         $searchModel = new TasksSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider= $searchModel->search(Yii::$app->request->queryParams);
 
         $dataProvider->query->andFilterWhere([
             'Status' => '2',
             'periodic' => 0
         ]);
+
+
 
         return $this->render('report', [
             'searchModel' => $searchModel,
@@ -81,15 +83,50 @@ class TasksController extends BehaviorsController
 //Все задачи
     public function actionCalendar()
     {
+        $userId = Yii::$app->user->identity['id'];
+        $searchModel = new TasksSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere([
 
-        if(Yii::$app->request->isAjax){
-            debug(Yii::$app->request->post());
-            return 'test';
+        ]);
+
+        $pew = $dataProvider->getModels();
+        $events = Tasks::find()->where([
+            'Status'=>1,
+            'periodic' => 0,
+        ])->all();
+
+        $tasks = [];
+
+        foreach ($pew as $eve) {
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $eve->id;
+            $event->url = 'update?id='.$eve->id;
+            $event->title = $eve->title;
+            $event->start = date($eve->finish_date);
+            $tasks[] = $event;
+        }
+
+
+
+        return $this->render('calendar', [
+            'events' => $tasks,
+            'searchModel'=>$searchModel
+        ]);
+    }
+    public function actionCalendarajax()
+    {
+
+        if(Yii::$app->request->isAjax) {
+            $userName = Yii::$app->request->get("userFilter");
+        }else{
+            $userName = null;
         }
 
         $events = Tasks::find()->where([
             'Status'=>1,
-             'periodic' => 0
+            'periodic' => 0,
+            'worker' => $userName,
         ])->all();
 
         $tasks = [];
@@ -103,10 +140,14 @@ class TasksController extends BehaviorsController
             $tasks[] = $event;
         }
 
-        return $this->render('calendar', [
+
+        return $this->renderAjax('calendarajax', [
             'events' => $tasks,
         ]);
+
+
     }
+
     public function actionSlave()
     {
         $userId = Yii::$app->user->identity['id'];
@@ -203,13 +244,15 @@ class TasksController extends BehaviorsController
             $tasks[] = $event;
 
         }
-        return $this->render('calendar', [
+        return $this->render('mycalendar', [
             'events' => $tasks,
         ]);
     }
 
     public function actionComplete()
     {
+
+
         $events = Tasks::find()->where([
             'Status'=>2,
              'periodic' => 0
@@ -289,7 +332,7 @@ class TasksController extends BehaviorsController
     public function actionView($id)
     {
 
-        return $this->render('view', [
+        return $this->render('update', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -404,7 +447,7 @@ class TasksController extends BehaviorsController
         $userId = Yii::$app->user->identity['id'];
 
         //Параметры при создании задачи
-        $model->created_at=date('Y-m-d');
+        $model->created_at = date('Y-m-d');
         $model->Status = 1;
         $model->task_creator=$userId;
 
@@ -526,10 +569,14 @@ class TasksController extends BehaviorsController
 
 
         if ($model->load(Yii::$app->request->post())) {
-
+            echo date('Y-m-d H:m:s');
             //Если задачу отправляет на проверку создатель она завершается
+            if($model->Status == 3){
+                $model->task_complete = date('Y-m-d H:i:s');
+            }
             if(($model->Status == 3)&&($model->task_creator == $model->worker)){
                 $model->Status=2;
+                $model->task_complete = date('Y-m-d H:i:s');
             }
 
             //Отправка E-mail по завершению

@@ -23,39 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
 
         'columns' => [
-
-
-            //'id',
-            //'author',
-
             'title',
-            [
-                'attribute'=>'Дата создания',
-                'value'=>'created_at',
-                'format'=>'raw',
-                'filter'=>DatePicker::widget([
-                    'model' => $searchModel,
-                    'attribute' => 'created_at',
-
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-mm-dd'
-                    ]
-                ])
-            ],
-
             'client',
             'phone',
-            //'now_result',
             'mail',
-            // 'now_date',
-            // 'next_date',
-
-            // 'next_event',
-            // 'project_type',
-            // 'meet',
-            // 'comment:ntext',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -39,7 +39,8 @@ class Tasks extends \yii\db\ActiveRecord
             [[ 'title', 'description', 'Status', 'worker','finish_date', 'created_at'], 'required'],
             [[ 'Status', 'worker', 'project_id','prev_task','periodic','task_creator','task_priority'], 'integer'],
             [['description','worker_comment'], 'string'],
-            [['created_at', 'finish_date', 'task_complete'],'date','format'=>'yyyy-mm-dd'],
+            [['created_at', 'finish_date'],'date','format'=>'yyyy-mm-dd'],
+            [['task_complete'],'date','format'=>'yyyy-MM-dd HH:i:ss'],
             [['title'], 'string', 'max' => 255],
 
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Projects::className(), 'targetAttribute' => ['project_id' => 'id']],
@@ -64,7 +65,8 @@ class Tasks extends \yii\db\ActiveRecord
             'project_id' => 'Проект',
             'task_priority'=>'Приоритет',
             'projectName' => 'Project Name',
-            'finish_date' => 'Дата окончания'
+            'finish_date' => 'Дата окончания',
+            'task_creator' => 'Создатель задачи'
         ];
     }
 

@@ -25,60 +25,67 @@ use dosamigos\datepicker\DatePicker;
 
         <div class="row">
             <div class="col-md-4">
-                <?php
-                    $workers = User::find()->all();
-                    $items = ArrayHelper::map($workers,'id','username');
-                    $params = [
-                        'prompt' => 'Ответственный за проект'
-                    ];
-                    echo $form->field($model, 'author')->dropDownList($items,$params);
-                ?>
-                <?= $form->field($model, 'created_at')->textInput(['readonly' => true]) ?>
-            </div>
-            <div class="col-md-8">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+            </div>
+
+            <div class="col-md-4">
+                <?php
+                $workers = User::find()->all();
+                $items = ArrayHelper::map($workers,'id','username');
+                $params = [
+                    'prompt' => 'Ответственный за проект'
+                ];
+                echo $form->field($model, 'author')->dropDownList($items,$params);
+                ?>
+                <!--    <?= $form->field($model, 'created_at')->textInput(['readonly' => true]) ?>-->
+            </div>
+
         </div>
         <div class="row">
             <div class="col-md-4">
                 <?= $form->field($model, 'client')->textInput(['maxlength' => true]) ?>
             </div>
-            <div class="col-md-4">
-                <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-            </div>
+
+
             <div class="col-md-4">
                 <?= $form->field($model, 'mail')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'contr_site')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <?= $form->field($model, 'project_type')->dropDownList([
+                        '1'=>'Разработка сайта',
+                        '2'=>'Продвижение',
+                        '3'=>'Другое'
+                    ])
+                ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'meet')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($model, 'cont_addr')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
-
-                <?= $form->field($model, 'now_date')->widget(
-                    DatePicker::className(), [
-                    // inline too, not bad
-                    'inline' => false,
-                    'language' =>'ru',
-                    // modify template for custom rendering
-                    //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-                    'clientOptions' => [
-                        'autoclose' => true,
-
-                        'format' => 'yyyy-mm-dd'
-                    ]
-                ]);?>
-            </div>
-            <div class="col-md-4">
-                <?= $form->field($model, 'now_result')->dropDownList([
-                    '1'=>'Отказ',
-                    '2'=>'Отправка КП',
-                    '3'=>'Слабый интерес',
-                    '4'=>'Сильный интерес',
-                    '5'=>'Встреча',
-                    '6'=>'Не дозвонился',
-                    '7'=>'Перенос',
-                    '8'=>'Запрос КП',
-                    '9'=>'Другое',
-                    '10'=>'Повторный звонок'
+                <?= $form->field($model, 'soa')->dropDownList([
+                    '1'=>'Услуги',
+                    '2'=>'Производственное предприятие',
+                    '3'=>'Торговое предприятие',
+                    '4'=>'Фитнес, здоровье, красота',
+                    '5'=>'Строительство',
+                    '6'=>'Питание',
+                    '7'=>'Образование'
                 ]) ?>
             </div>
         </div>
@@ -110,36 +117,40 @@ use dosamigos\datepicker\DatePicker;
                 ]) ?>
             </div>
         </div>
-
         <div class="row">
+            <!--
             <div class="col-md-4">
-                <?= $form->field($model, 'project_type')->dropDownList([
-                        '1'=>'Разработка сайта',
-                        '2'=>'Продвижение',
-                        '3'=>'Другое'
-                    ])
-                ?>
+
+                <?= $form->field($model, 'now_date')->widget(
+                DatePicker::className(), [
+                // inline too, not bad
+                'inline' => false,
+                'language' =>'ru',
+                // modify template for custom rendering
+                //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+                'clientOptions' => [
+                    'autoclose' => true,
+
+                    'format' => 'yyyy-mm-dd'
+                ]
+            ]);?>
             </div>
             <div class="col-md-4">
-                <?= $form->field($model, 'meet')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'now_result')->dropDownList([
+                '1'=>'Отказ',
+                '2'=>'Отправка КП',
+                '3'=>'Слабый интерес',
+                '4'=>'Сильный интерес',
+                '5'=>'Встреча',
+                '6'=>'Не дозвонился',
+                '7'=>'Перенос',
+                '8'=>'Запрос КП',
+                '9'=>'Другое',
+                '10'=>'Повторный звонок'
+            ]) ?>
             </div>
+            -->
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

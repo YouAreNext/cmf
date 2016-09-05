@@ -21,7 +21,7 @@ class TasksSearch extends Tasks
     public function rules()
     {
         return [
-            [['id', 'Status', 'created_at', 'task_complete', 'worker'], 'integer'],
+            [['id', 'Status', 'created_at', 'task_complete', 'worker','task_creator'], 'integer'],
             [['title', 'description', 'project_id'], 'safe'],
             [['project'],'safe'],
             [['finish_date'],'date','format'=>'yyyy-mm-dd']
@@ -54,7 +54,12 @@ class TasksSearch extends Tasks
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder'=> ['task_priority'=>SORT_DESC]]
+            'sort' => [
+                'defaultOrder'=> [
+                    'task_priority'=>SORT_DESC,
+                    'finish_date' => SORT_DESC,
+                ]
+            ]
         ]);
 
 
@@ -63,13 +68,18 @@ class TasksSearch extends Tasks
 
 
         $this->load($params);
-        $finish = $this->finish_date;
 
 
+        //Сравнение даты по промежуткам
         if ( ! is_null($this->finish_date) && strpos($this->finish_date, 'to') !== false ) {
             list($start_date, $end_date) = explode('to', $this->finish_date);
             $query->andFilterWhere(['between', 'finish_date', $start_date, $end_date]);
             $this->finish_date = null;
+        }
+        if ( ! is_null($this->task_complete) && strpos($this->task_complete, 'to') !== false ) {
+            list($start_date, $end_date) = explode('to', $this->task_complete);
+            $query->andFilterWhere(['between', 'finish_date', $start_date, $end_date]);
+            $this->task_complete = null;
         }
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -88,6 +98,7 @@ class TasksSearch extends Tasks
             'worker' => $this->worker,
             'task_complete' => $this->task_complete,
             'project_id' => $this->project_id,
+            'task_creator' => $this->task_creator
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

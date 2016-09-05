@@ -38,9 +38,9 @@ class Contractors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['author', 'title', 'client', 'phone', 'mail', 'now_date', 'next_date', 'now_result', 'next_event', 'project_type', 'meet','created_at'], 'required'],
-            [['author','now_result', 'next_event', 'project_type'], 'integer'],
-            [['comment'], 'string'],
+            [['author', 'title'], 'required'],
+            [['author','now_result', 'next_event', 'project_type','soa'], 'integer'],
+            [['comment','contr_site','cont_addr'], 'string'],
             [['created_at'],'date','format'=>'yyyy-mm-dd'],
             [['now_date', 'next_date',],'date','format'=> 'yyyy-mm-dd'],
             [['title', 'client', 'phone', 'mail', 'meet'], 'string', 'max' => 255],
@@ -67,6 +67,9 @@ class Contractors extends \yii\db\ActiveRecord
             'project_type' => 'Тип проекта',
             'meet' => 'Место встречи',
             'comment' => 'Комментарий',
+            'contr_site' => 'Сайт',
+            'cont_addr' => 'Адрес',
+            'soa' => 'Сфера деятельности'
         ];
     }
 }
