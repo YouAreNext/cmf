@@ -49,7 +49,7 @@ class BehaviorsController extends Controller{
                     [
                         'allow' => true,
                         'controllers' => ['main'],
-                        'actions' => ['tasks','projects','project','create','edit','pew','tasker'],
+                        'actions' => ['tasks','projects','project','create','edit','pew','tasker','chart'],
                         'verbs' => ['GET','POST'],
                         'roles' => ['@']
                     ],

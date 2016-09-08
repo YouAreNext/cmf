@@ -63,8 +63,9 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
             <a href="/tasks/complete" class="side-panel-item side-panel-complete">Выполненные задачи</a>
 
         </div>
-    </div>
 
+    </div>
+    <a href="/main/chart" class="side-panel-item side-panel-chart"></a>
 
 </div>
 <?php $this->beginBody(); ?>

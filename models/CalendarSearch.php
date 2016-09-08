@@ -10,7 +10,7 @@ use app\models\Tasks;
 /**
  * TasksSearch represents the model behind the search form about `app\models\Tasks`.
  */
-class TasksSearch extends Tasks
+class CalendarSearch extends Tasks
 {
     /**
      * @inheritdoc
@@ -53,12 +53,15 @@ class TasksSearch extends Tasks
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query->limit(40),
+            'query' => $query,
             'sort' => [
                 'defaultOrder'=> [
                     'task_priority'=>SORT_DESC,
                     'finish_date' => SORT_DESC,
                 ]
+            ],
+            'pagination' => [
+                'pageSize' => 1000,
             ]
         ]);
 

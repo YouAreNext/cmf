@@ -97,7 +97,6 @@ class TasksController extends BehaviorsController
         ])->all();
 
         $tasks = [];
-
         foreach ($pew as $eve) {
             $event = new \yii2fullcalendar\models\Event();
             $event->id = $eve->id;

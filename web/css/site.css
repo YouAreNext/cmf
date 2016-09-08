@@ -332,6 +332,9 @@ textarea{
 .side-panel-calendar{
     background: url(../assets/images/icons/calendar.png) no-repeat center;
 }
+.side-panel-chart{
+    background: url(../assets/images/icons/chart.png) no-repeat center;
+}
 .side-panel-complete{
      background: url(../assets/images/icons/calendar-complete.png) no-repeat center;
  }

@@ -53,6 +53,11 @@ class MainController extends BehaviorsController{
             ]
         );
     }
+
+    public function actionChart(){
+        return $this->render('chart');
+    }
+
     public function actionProjects(){
         $arrayFck = ProjectList::getAll();
         return $this->render('Projects',
