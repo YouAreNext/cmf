@@ -13,7 +13,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\swiftmailer;
 use yii\data\ActiveDataProvider;
-
+use app\models\CalendarSearch;
 
 /**
  * TasksController implements the CRUD actions for Tasks model.
@@ -84,7 +84,7 @@ class TasksController extends BehaviorsController
     public function actionCalendar()
     {
         $userId = Yii::$app->user->identity['id'];
-        $searchModel = new TasksSearch();
+        $searchModel = new CalendarSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere([
             'Status'=>1,
@@ -489,9 +489,6 @@ class TasksController extends BehaviorsController
     }
     public function actionAjax($date)
     {
-
-
-
         $model = new Tasks();
         $model->created_at=date('Y-m-d');
         $model->finish_date=$date;
