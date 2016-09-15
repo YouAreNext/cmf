@@ -37,6 +37,7 @@ $MyTaskSlave= \app\models\Tasks::find()->where([
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700&subset=cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,300,700&subset=cyrillic,cyrillic-ext' rel='stylesheet' type='text/css'>
     <meta charset="UTF-8">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <title><?= yii::$app->name ?></title>
     <?php $this->head() ?>
     <?= Html::csrfMetaTags() ?>

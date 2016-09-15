@@ -1115,3 +1115,24 @@ a:hover{
     line-height: 1;
     -webkit-font-smoothing: antialiased;
 }
+
+.sub-task-panel{
+    height: 40px;
+    line-height: 40px;
+    background: #FFF;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 60px;
+    position: relative;
+}
+.sub-task-panel:after{
+    content: '';
+    position: absolute;
+    background: url(/web/assets/images/icons/subtask.png);
+    width: 30px;
+    height: 30px;
+    left:10px;
+    top:50%;
+    margin-top: -15px;
+}

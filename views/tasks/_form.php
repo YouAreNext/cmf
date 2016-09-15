@@ -28,6 +28,14 @@ if($model->isNewRecord){}else {
     ])->count();
 }
 
+$TaskId = $model->prev_task;
+
+if(is_null($TaskId)){
+
+}else{
+    $pew1 = Tasks::find()->where(['id'=> $TaskId])->one()->title;
+}
+
 ?>
 <ul class="nav nav-tabs nav-justified">
     <li class="active"><a data-toggle="tab" href="#page1">Задача</a></li>
@@ -50,6 +58,23 @@ if($model->isNewRecord){}else {
         </span>
         </a></li>
 </ul>
+
+
+<?php
+    if($model->isNewRecord ){}else {
+        if(!is_null($TaskId)){
+            echo '
+                <div class="sub-task-panel">
+                <a href="update?id='.$TaskId.'">
+                '.$pew1.'
+                </a>
+                </div>
+            ';
+        }
+    }
+?>
+
+
 <div class="tab-content tab-content-projects clearfix">
 <div class="tasks-form tab-pane fade in active" id="page1">
 

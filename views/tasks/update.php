@@ -7,10 +7,18 @@ use app\models\Profile;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tasks */
 /* @var $pews */
+$TaskId = $model->prev_task;
 
-$this->title = 'Обзор задачи: ' . $model->title;
 $this->params['breadcrumbs'][] = ['label' => 'Задачи', 'url' => ['index']];
-$this->params['breadcrumbs'][] = 'Обзор задачи';
+echo $TaskId;
+if(is_null($TaskId)){
+    $this->params['breadcrumbs'][] = 'Обзор задачи';
+    $this->title = 'Обзор задачи: ' . $model->title;
+}else{
+    $this->params['breadcrumbs'][] = 'Обзор подзадачи';
+    $this->title = 'Обзор подзадачи: ' . $model->title;
+}
+
 
 
 $thisProject = $model->id;
