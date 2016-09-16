@@ -35,17 +35,15 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "kartik-v/yii2-datecontrol": "dev-master",
         "yiisoft/yii2-imagine": "~2.0.0",
-        "2amigos/yii2-highcharts-widget" : "~1.0"
-
+        "2amigos/yii2-highcharts-widget" : "~1.0",
+        "2amigos/yii2-tinymce-widget" : "~1.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
         "yiisoft/yii2-faker": "*"
-
     },
-
     "config": {
         "process-timeout": 1800
     },

@@ -12,6 +12,7 @@ use kartik\select2\Select2;
 use dosamigos\datepicker\DatePicker;
 use kartik\file\FileInput;
 use yii\helpers\Url;
+use dosamigos\tinymce\TinyMce;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tasks */
 /* @var $form yii\widgets\ActiveForm */
@@ -97,6 +98,12 @@ if(is_null($TaskId)){
                     ];
                     echo $form->field($model, 'worker')->dropDownList($items,$params);
                 ?>
+
+
+                <?= $form->field($model, 'project_id')->widget(Select2::classname(), [
+                    'data' => ArrayHelper::map(Projects::find()->all(),'id','Title'),
+                    'options' => ['placeholder' => 'Привязать к проекту...'],
+                ]); ?>
                 <?php
 
 
@@ -130,15 +137,21 @@ if(is_null($TaskId)){
                 }
 
                 ?>
-
-                <?= $form->field($model, 'project_id')->widget(Select2::classname(), [
-                    'data' => ArrayHelper::map(Projects::find()->all(),'id','Title'),
-                    'options' => ['placeholder' => 'Привязать к проекту...'],
-                ]); ?>
             </div>
             <div class="col-md-8">
-                <?= $form->field($model, 'description')->textarea() ?>
 
+                <?= $form->field($model, 'description')->widget(TinyMce::className(), [
+                    'options' => ['rows' => 6],
+                    'language' => 'ru',
+                    'clientOptions' => [
+                        'plugins' => [
+                            "advlist autolink lists link charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table contextmenu paste"
+                        ],
+                        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    ]
+                ]);?>
                 <div class="col-md-6 wpad wpad-first">
                     <?= $form->field($model, 'task_priority')->dropDownList([
                         '1' => 'Изи',
