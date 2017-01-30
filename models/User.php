@@ -40,7 +40,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['username', 'password' ],'filter','filter' => 'trim'],
             [['username', 'status'], 'required'],
-            ['username','string','min' => 2,'max' => 255],
+            [['username','job_position'],'string','min' => 2,'max' => 255],
             ['password','required','on'=>'create'],
             ['username','unique','message' => 'Имя занято']
         ];
@@ -60,6 +60,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
             'roles' => 'Roles',
+            'job_position' => 'Ваша должность'
         ];
     }
 

@@ -1,18 +1,18 @@
 <?php
 
-use app\models\Tasks;
-use yii\data\ActiveDataProvider;
-use yii\widgets\ListView;
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use app\models\User;
-use yii\helpers\ArrayHelper;
-use app\models\Projects;
-use kartik\select2\Select2;
-use dosamigos\datepicker\DatePicker;
-use kartik\file\FileInput;
-use yii\helpers\Url;
-use dosamigos\tinymce\TinyMce;
+    use app\models\Tasks;
+    use yii\data\ActiveDataProvider;
+    use yii\widgets\ListView;
+    use yii\helpers\Html;
+    use yii\widgets\ActiveForm;
+    use app\models\User;
+    use yii\helpers\ArrayHelper;
+    use app\models\Projects;
+    use kartik\select2\Select2;
+    use dosamigos\datepicker\DatePicker;
+    use kartik\file\FileInput;
+    use yii\helpers\Url;
+    use dosamigos\tinymce\TinyMce;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tasks */
 /* @var $form yii\widgets\ActiveForm */
@@ -40,7 +40,9 @@ if(is_null($TaskId)){
 ?>
 <ul class="nav nav-tabs nav-justified">
     <li class="active"><a data-toggle="tab" href="#page1">Задача</a></li>
-    <li><a data-toggle="tab" href="#page2">Подзадачи
+    <li><a data-toggle="tab" href="#page_result">Цели</a></li>
+    <li>
+        <a data-toggle="tab" href="#page2">Подзадачи
         <span class="file-count">
             <?php
             if($model->isNewRecord){}else {
@@ -48,7 +50,8 @@ if(is_null($TaskId)){
             }
             ?>
         </span>
-        </a></li>
+        </a>
+    </li>
     <li><a data-toggle="tab" href="#page3">Файлы
         <span class="file-count">
             <?php
@@ -78,8 +81,6 @@ if(is_null($TaskId)){
 
 <div class="tab-content tab-content-projects clearfix">
 <div class="tasks-form tab-pane fade in active" id="page1">
-
-
 
 
     <?php $form = ActiveForm::begin(); ?>
@@ -259,28 +260,34 @@ if(is_null($TaskId)){
         </div>
 
     </div>
+    <div class="tasks-form tab-pane fade in" id="page_result">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $form->field($model, 'task_target')->textarea(['rows' => 6]) ?>
+            </div>
+        </div>
+    </div>
     <div class="tasks-form tab-pane fade in" id="page3">
 
         <h3>Файлы</h3>
 
         <?php $form2 = ActiveForm::begin(['action' => '/projects/upload','options' => ['enctype' => 'multipart/form-data']]) ?>
-        <?php
-        if($model->isNewRecord){}else{
-            echo FileInput::widget([
-                'name'=>'file',
-                'language' => 'ru',
-                'options'=>[
-                    'multiple'=>true
-                ],
-                'pluginOptions'=>[
-                    'previewFileType' => 'any',
-                    'uploadUrl' => Url::to('/projects/upload?id='.$model->id.'&parent=1')
-                ]
+            <?php
+                if($model->isNewRecord){}else{
+                    echo FileInput::widget([
+                        'name'=>'file',
+                        'language' => 'ru',
+                        'options'=>[
+                            'multiple'=>true
+                        ],
+                        'pluginOptions'=>[
+                            'previewFileType' => 'any',
+                            'uploadUrl' => Url::to('/projects/upload?id='.$model->id.'&parent=1')
+                        ]
 
-            ]);
-        }
-
-        ?>
+                    ]);
+                }
+            ?>
         <?php ActiveForm::end()?>
 
         <div class="file-big-container">

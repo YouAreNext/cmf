@@ -40,7 +40,7 @@ class Profile extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['birthday', 'gender'], 'integer'],
+            [['birthday', 'gender','job_position'], 'integer'],
             [['email','ava_url'], 'string', 'max' => 255],
             [['first_name', 'second_name', 'middle_name'], 'string', 'max' => 32],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -66,6 +66,7 @@ class Profile extends \yii\db\ActiveRecord
             'middle_name' => 'Отчество',
             'birthday' => 'Дата рождения',
             'gender' => 'Пол',
+            'job_position' => 'Ваша должность'
         ];
     }
 
