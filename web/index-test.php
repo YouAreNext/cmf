@@ -1,3 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
 <?php
 
 // NOTE: Make sure this file is not accessible when deployed to production
